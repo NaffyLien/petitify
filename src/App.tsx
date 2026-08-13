@@ -1,121 +1,217 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
+import { ProfileSection } from './feat/profile/ProfileSection'
+import { EducationSection } from './feat/education/EducationSection'
+import { CertificatesSection } from './feat/certificates/CertificatesSection'
+import { ExperienceSection } from './feat/experience/ExperienceSection'
+import { ProjectsSection } from './feat/projects/ProjectsSection'
+import { SkillsSection } from './feat/skills/SkillsSection'
+import { SoftSkillsSection } from './feat/soft-skills/SoftSkillsSection'
+import { LanguagesSection } from './feat/languages/LanguagesSection'
+import {
+  createCertificate,
+  createEducation,
+  createExperience,
+  createProject,
+  initialResumeState,
+  type CertificateItem,
+  type EducationItem,
+  type ExperienceItem,
+  type ProjectItem,
+  type ProfileDetails,
+  type ResumeState,
+} from './types/resume'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [resume, setResume] = useState<ResumeState>(initialResumeState)
+
+  const updateProfile = (field: keyof ProfileDetails, value: string) => {
+    setResume((current) => ({
+      ...current,
+      profile: {
+        ...current.profile,
+        [field]: value,
+      },
+    }))
+  }
+
+  const updateEducation = (id: number, field: keyof EducationItem, value: string) => {
+    setResume((current) => ({
+      ...current,
+      education: current.education.map((entry) =>
+        entry.id === id ? { ...entry, [field]: value } : entry,
+      ),
+    }))
+  }
+
+  const updateCertificate = (id: number, field: keyof CertificateItem, value: string) => {
+    setResume((current) => ({
+      ...current,
+      certificates: current.certificates.map((entry) =>
+        entry.id === id ? { ...entry, [field]: value } : entry,
+      ),
+    }))
+  }
+
+  const updateExperience = (id: number, field: keyof ExperienceItem, value: string) => {
+    setResume((current) => ({
+      ...current,
+      experience: current.experience.map((entry) =>
+        entry.id === id ? { ...entry, [field]: value } : entry,
+      ),
+    }))
+  }
+
+  const updateProject = (id: number, field: keyof ProjectItem, value: string) => {
+    setResume((current) => ({
+      ...current,
+      projects: current.projects.map((entry) =>
+        entry.id === id ? { ...entry, [field]: value } : entry,
+      ),
+    }))
+  }
+
+  const addItem = (key: 'education' | 'certificates' | 'experience' | 'projects') => {
+    setResume((current) => {
+      const nextId = Date.now()
+
+      if (key === 'education') {
+        return {
+          ...current,
+          education: [...current.education, createEducation(nextId)],
+        }
+      }
+
+      if (key === 'certificates') {
+        return {
+          ...current,
+          certificates: [...current.certificates, createCertificate(nextId)],
+        }
+      }
+
+      if (key === 'experience') {
+        return {
+          ...current,
+          experience: [...current.experience, createExperience(nextId)],
+        }
+      }
+
+      return {
+        ...current,
+        projects: [...current.projects, createProject(nextId)],
+      }
+    })
+  }
+
+  const removeItem = (
+    key: 'education' | 'certificates' | 'experience' | 'projects',
+    id: number,
+  ) => {
+    setResume((current) => ({
+      ...current,
+      [key]: current[key].filter((entry) => entry.id !== id),
+    }))
+  }
+
+  const updateSkillList = (
+    key: 'technicalSkills' | 'softSkills' | 'languages',
+    index: number,
+    value: string,
+  ) => {
+    setResume((current) => ({
+      ...current,
+      [key]: current[key].map((entry, itemIndex) =>
+        itemIndex === index ? value : entry,
+      ),
+    }))
+  }
+
+  const addSkill = (key: 'technicalSkills' | 'softSkills' | 'languages') => {
+    setResume((current) => ({
+      ...current,
+      [key]: [...current[key], ''],
+    }))
+  }
+
+  const removeSkill = (
+    key: 'technicalSkills' | 'softSkills' | 'languages',
+    index: number,
+  ) => {
+    setResume((current) => ({
+      ...current,
+      [key]: current[key].filter((_, itemIndex) => itemIndex !== index),
+    }))
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <main className="page-shell">
+      <aside className="sidebar">
+        <div className="brand-block">
+          <span className="brand-mark">P</span>
+          <div>
+            <p className="eyebrow">Resume builder</p>
+            <h1>Pocketify</h1>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+
+        <nav className="nav-list" aria-label="Resume sections">
+          <a href="#profile">Profile</a>
+          <a href="#education">Education</a>
+          <a href="#certificates">Certificates & Training</a>
+          <a href="#experience">Experience</a>
+          <a href="#projects">Key projects</a>
+          <a href="#technical-skills">Technical skills</a>
+          <a href="#soft-skills">Soft skills</a>
+          <a href="#languages">Languages</a>
+        </nav>
+      </aside>
+
+      <section className="content-panel">
+        <ProfileSection profile={resume.profile} onChange={updateProfile} />
+        <EducationSection
+          items={resume.education}
+          onChange={updateEducation}
+          onAdd={() => addItem('education')}
+          onRemove={(id) => removeItem('education', id)}
+        />
+        <CertificatesSection
+          items={resume.certificates}
+          onChange={updateCertificate}
+          onAdd={() => addItem('certificates')}
+          onRemove={(id) => removeItem('certificates', id)}
+        />
+        <ExperienceSection
+          items={resume.experience}
+          onChange={updateExperience}
+          onAdd={() => addItem('experience')}
+          onRemove={(id) => removeItem('experience', id)}
+        />
+        <ProjectsSection
+          items={resume.projects}
+          onChange={updateProject}
+          onAdd={() => addItem('projects')}
+          onRemove={(id) => removeItem('projects', id)}
+        />
+        <SkillsSection
+          items={resume.technicalSkills}
+          onChange={(index, value) => updateSkillList('technicalSkills', index, value)}
+          onAdd={() => addSkill('technicalSkills')}
+          onRemove={(index) => removeSkill('technicalSkills', index)}
+        />
+        <SoftSkillsSection
+          items={resume.softSkills}
+          onChange={(index, value) => updateSkillList('softSkills', index, value)}
+          onAdd={() => addSkill('softSkills')}
+          onRemove={(index) => removeSkill('softSkills', index)}
+        />
+        <LanguagesSection
+          items={resume.languages}
+          onChange={(index, value) => updateSkillList('languages', index, value)}
+          onAdd={() => addSkill('languages')}
+          onRemove={(index) => removeSkill('languages', index)}
+        />
       </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    </main>
   )
 }
 
