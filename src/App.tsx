@@ -22,6 +22,7 @@ import {
   type ResumeState,
 } from './types/resume'
 import SlideModal from './components/SlideModal'
+import ResumePreview from './components/ResumePreview'
 
 function App() {
   const [resume, setResume] = useState<ResumeState>(initialResumeState)
@@ -253,49 +254,9 @@ function App() {
       </SlideModal>
 
       <section className="content-panel">
-        <ProfileSection profile={resume.profile} onChange={updateProfile} />
-        <EducationSection
-          items={resume.education}
-          onChange={updateEducation}
-          onAdd={() => addItem('education')}
-          onRemove={(id) => removeItem('education', id)}
-        />
-        <CertificatesSection
-          items={resume.certificates}
-          onChange={updateCertificate}
-          onAdd={() => addItem('certificates')}
-          onRemove={(id) => removeItem('certificates', id)}
-        />
-        <ExperienceSection
-          items={resume.experience}
-          onChange={updateExperience}
-          onAdd={() => addItem('experience')}
-          onRemove={(id) => removeItem('experience', id)}
-        />
-        <ProjectsSection
-          items={resume.projects}
-          onChange={updateProject}
-          onAdd={() => addItem('projects')}
-          onRemove={(id) => removeItem('projects', id)}
-        />
-        <SkillsSection
-          items={resume.technicalSkills}
-          onChange={(index, value) => updateSkillList('technicalSkills', index, value)}
-          onAdd={() => addSkill('technicalSkills')}
-          onRemove={(index) => removeSkill('technicalSkills', index)}
-        />
-        <SoftSkillsSection
-          items={resume.softSkills}
-          onChange={(index, value) => updateSkillList('softSkills', index, value)}
-          onAdd={() => addSkill('softSkills')}
-          onRemove={(index) => removeSkill('softSkills', index)}
-        />
-        <LanguagesSection
-          items={resume.languages}
-          onChange={(index, value) => updateSkillList('languages', index, value)}
-          onAdd={() => addSkill('languages')}
-          onRemove={(index) => removeSkill('languages', index)}
-        />
+        <ResumePreview resume={resume} />
+
+        
       </section>
     </main>
   )
