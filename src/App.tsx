@@ -6,6 +6,7 @@ import HelloWorld from './pages/HelloWorld'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { GoogleAuthProvider } from './contexts/GoogleAuthContext'
 import { VITE_GOOGLE_CLIENT_ID } from './config/env'
+import ProtectedRoute from './components/ProtectedRoute'
 
 if (!VITE_GOOGLE_CLIENT_ID) {
   throw new Error('VITE_GOOGLE_CLIENT_ID is not defined in .env')
@@ -36,8 +37,10 @@ const AppRoutes = () => {
         <Route path='/' element={<HelloWorld />} />
       </Route>
       <Route element={<AuthWrapper><Outlet /></AuthWrapper>}>
-        <Route path="redac" element={<Home />} />
-        <Route path="walk" element={<ExportPage resume={resume} />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="redac" element={<Home />} />
+          <Route path="walk" element={<ExportPage resume={resume} />} />
+        </Route>
       </Route>
     </Routes>
   )
