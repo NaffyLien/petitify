@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react'
 import type { ResumeState } from '../../types/resume'
+import { useNavigate } from 'react-router-dom'
 import './ExportPage.css'
 
 type ExportPageProps = {
   resume: ResumeState
-  onBack: () => void
 }
 
 type ExcludedKeys = {
@@ -17,7 +17,7 @@ type ExcludedKeys = {
   languages: Set<number>
 }
 
-export default function ExportPage({ resume, onBack }: ExportPageProps) {
+export default function ExportPage({ resume }: ExportPageProps) {
   const [filter, setFilter] = useState('')
   const [activeKeyword, setActiveKeyword] = useState<string | null>(null)
   const [excluded, setExcluded] = useState<ExcludedKeys>({
@@ -31,6 +31,7 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
   })
 
   const keywords = ['Mobile development', 'Web Development', 'Desktop App', 'Network']
+  const navigate = useNavigate()
 
   const combinedSkills = useMemo(() => {
     return [...(resume.technicalSkills || []), ...(resume.softSkills || []), ...(resume.languages || [])]
@@ -78,7 +79,7 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
     <div className="export-page">
       <div className="export-page-header">
         <div className="export-page-header-left">
-          <button className="ghost-button" onClick={onBack}>Back</button>
+          <button className="ghost-button" onClick={() => navigate('/')}>Back</button>
           <h1 className="export-page-title">Exported profile</h1>
         </div>
 
