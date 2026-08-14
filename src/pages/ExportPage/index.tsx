@@ -79,7 +79,7 @@ export default function ExportPage({ resume }: ExportPageProps) {
     <div className="export-page">
       <div className="export-page-header">
         <div className="export-page-header-left">
-          <button className="ghost-button" onClick={() => navigate('/pocketify/redac')}>Back</button>
+          <button className="ghost-button" onClick={() => navigate('/petitify/redac')}>Back</button>
           <h1 className="export-page-title">Exported profile</h1>
         </div>
 

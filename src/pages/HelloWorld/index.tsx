@@ -8,7 +8,7 @@ const HelloWorld =()=>{
   return <main>
     <header>
       <h1>Hello world</h1>
-      <button onClick={()=>navigate('/pocketify/redac/')}>Rediger</button>
+      <button onClick={()=>navigate('/petitify/redac/')}>Rediger</button>
     </header>
     {isAuthenticated && user ? (
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>

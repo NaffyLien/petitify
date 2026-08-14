@@ -41,7 +41,7 @@ function AppContent() {
           <span className="brand-mark">P</span>
           <div>
             <p className="eyebrow">Resume builder</p>
-            <h1>Pocketify</h1>
+            <h1>Petitify</h1>
           </div>
         </div>
 
@@ -95,7 +95,7 @@ function AppContent() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
           <h2 style={{ margin: 0 }}>Resume</h2>
           <div>
-            <button type="button" className="primary-button" onClick={() => navigate('/pocketify/walk')}>Export profile</button>
+            <button type="button" className="primary-button" onClick={() => navigate('/petitify/walk')}>Export profile</button>
           </div>
         </div>
 

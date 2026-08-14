@@ -10,7 +10,7 @@ import {
   type ResumeState,
 } from '../types/resume'
 
-const STORAGE_KEY = 'pocketify-resume'
+const STORAGE_KEY = 'petitify-resume'
 
 function loadResume() {
   try {
