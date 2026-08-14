@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './App.css'
 import { ProfileSection } from './feat/profile'
 import { EducationSection } from './feat/education'
@@ -11,7 +11,6 @@ import { SoftSkillsSection } from './feat/soft-skills'
 import { LanguagesSection } from './feat/languages'
 import SlideModal from './components/SlideModal'
 import ResumePreview from './components/ResumePreview'
-import ExportPage from './pages/ExportPage'
 import { useResume } from './contexts/useResume'
 
 function AppContent() {
@@ -36,84 +35,73 @@ function AppContent() {
   }, [modalOpen])
 
   return (
-    <Routes>
-      <Route
-        path="/pocketify/exp"
-        element={<ExportPage resume={resume} onBack={() => navigate('/')} />}
-      />
-      <Route
-        path="*"
-        element={(
-          <main className="page-shell">
-            <aside className="sidebar">
-              <div className="brand-block">
-                <span className="brand-mark">P</span>
-                <div>
-                  <p className="eyebrow">Resume builder</p>
-                  <h1>Pocketify</h1>
-                </div>
-              </div>
+    <main className="page-shell">
+      <aside className="sidebar">
+        <div className="brand-block">
+          <span className="brand-mark">P</span>
+          <div>
+            <p className="eyebrow">Resume builder</p>
+            <h1>Pocketify</h1>
+          </div>
+        </div>
 
-              <nav className="nav-list" aria-label="Resume sections">
-                <button type="button" onClick={() => openModal('profile')}>Profile</button>
-                <button type="button" onClick={() => openModal('education')}>Education</button>
-                <button type="button" onClick={() => openModal('certificates')}>Certificates & Training</button>
-                <button type="button" onClick={() => openModal('experience')}>Experience</button>
-                <button type="button" onClick={() => openModal('projects')}>Key projects</button>
-                <button type="button" onClick={() => openModal('technical-skills')}>Technical skills</button>
-                <button type="button" onClick={() => openModal('soft-skills')}>Soft skills</button>
-                <button type="button" onClick={() => openModal('languages')}>Languages</button>
-              </nav>
-            </aside>
+        <nav className="nav-list" aria-label="Resume sections">
+          <button type="button" onClick={() => openModal('profile')}>Profile</button>
+          <button type="button" onClick={() => openModal('education')}>Education</button>
+          <button type="button" onClick={() => openModal('certificates')}>Certificates & Training</button>
+          <button type="button" onClick={() => openModal('experience')}>Experience</button>
+          <button type="button" onClick={() => openModal('projects')}>Key projects</button>
+          <button type="button" onClick={() => openModal('technical-skills')}>Technical skills</button>
+          <button type="button" onClick={() => openModal('soft-skills')}>Soft skills</button>
+          <button type="button" onClick={() => openModal('languages')}>Languages</button>
+        </nav>
+      </aside>
 
-            <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}>
-              {modalSection === 'profile' && (
-                <ProfileSection />
-              )}
-
-              {modalSection === 'education' && (
-                <EducationSection />
-              )}
-
-              {modalSection === 'certificates' && (
-                <CertificatesSection />
-              )}
-
-              {modalSection === 'experience' && (
-                <ExperienceSection />
-              )}
-
-              {modalSection === 'projects' && (
-                <ProjectsSection />
-              )}
-
-              {modalSection === 'technical-skills' && (
-                <SkillsSection />
-              )}
-
-              {modalSection === 'soft-skills' && (
-                <SoftSkillsSection />
-              )}
-
-              {modalSection === 'languages' && (
-                <LanguagesSection />
-              )}
-            </SlideModal>
-
-            <section className="content-panel">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-                <h2 style={{ margin: 0 }}>Resume</h2>
-                <div>
-                  <button type="button" className="primary-button" onClick={() => navigate('/pocketify/exp')}>Export profile</button>
-                </div>
-              </div>
-
-              <ResumePreview resume={resume} />
-            </section>
-          </main>
+      <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}>
+        {modalSection === 'profile' && (
+          <ProfileSection />
         )}
-      />
-    </Routes>
+
+        {modalSection === 'education' && (
+          <EducationSection />
+        )}
+
+        {modalSection === 'certificates' && (
+          <CertificatesSection />
+        )}
+
+        {modalSection === 'experience' && (
+          <ExperienceSection />
+        )}
+
+        {modalSection === 'projects' && (
+          <ProjectsSection />
+        )}
+
+        {modalSection === 'technical-skills' && (
+          <SkillsSection />
+        )}
+
+        {modalSection === 'soft-skills' && (
+          <SoftSkillsSection />
+        )}
+
+        {modalSection === 'languages' && (
+          <LanguagesSection />
+        )}
+      </SlideModal>
+
+      <section className="content-panel">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+          <h2 style={{ margin: 0 }}>Resume</h2>
+          <div>
+            <button type="button" className="primary-button" onClick={() => navigate('/pocketify/exp')}>Export profile</button>
+          </div>
+        </div>
+
+        <ResumePreview resume={resume} />
+      </section>
+    </main>
   )
 }
 
