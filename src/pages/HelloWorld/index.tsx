@@ -5,7 +5,6 @@ import { useGoogleAuth } from "../../contexts/GoogleAuthContext"
 const HelloWorld =()=>{
   const navigate = useNavigate()
   const { user, isAuthenticated, logout } = useGoogleAuth()
-  console.log(import.meta.env.VITE_VOTRE_CLIENT_ID, "or not found")
   return <main>
     <header>
       <h1>Hello world</h1>
