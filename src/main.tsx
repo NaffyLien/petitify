@@ -3,14 +3,14 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import { ResumeProvider } from './contexts/ResumeProvider'
-import AppRoutes from './routes'
+import App from './App'
 
 createRoot(document.getElementById('root')!).render(
 
   <StrictMode>
     <BrowserRouter>
       <ResumeProvider>
-        <AppRoutes />
+        <App />
       </ResumeProvider>
     </BrowserRouter>
   </StrictMode>,
