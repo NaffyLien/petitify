@@ -33,11 +33,11 @@ const AppRoutes = () => {
           </GoogleAuthProvider>
         </GoogleOAuthProvider>
       }>
-        <Route path='/petitify/' element={<HelloWorld />} />
+        <Route path='/' element={<HelloWorld />} />
       </Route>
       <Route element={<AuthWrapper><Outlet /></AuthWrapper>}>
-        <Route path="/petitify/redac" element={<Home />} />
-        <Route path="/petitify/walk" element={<ExportPage resume={resume} />} />
+        <Route path="redac" element={<Home />} />
+        <Route path="walk" element={<ExportPage resume={resume} />} />
       </Route>
     </Routes>
   )
