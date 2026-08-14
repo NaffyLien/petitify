@@ -49,3 +49,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VITE_VOTRE_CLIENT_ID: ${{ secrets.VITE_VOTRE_CLIENT_ID }}
+    steps:
+      - run: echo "Injection"
