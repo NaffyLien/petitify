@@ -63,7 +63,7 @@ export default function ResumePreview({ resume }: ResumePreviewProps) {
           <ul style={{ margin: 0, paddingLeft: 16 }}>
             {resume.projects.map((p) => (
               <li key={p.id} style={{ marginBottom: 8 }}>
-                <strong>{p.title}</strong> — <small style={{ color: '#475569' }}>{p.link}</small>
+                <strong>{p.name}</strong> — <small style={{ color: '#475569' }}>{p.link}</small>
                 {p.description && <div style={{ color: '#334155' }}>{p.description}</div>}
               </li>
             ))}
@@ -77,7 +77,7 @@ export default function ResumePreview({ resume }: ResumePreviewProps) {
           <ul style={{ margin: 0, paddingLeft: 16 }}>
             {resume.certificates.map((c) => (
               <li key={c.id} style={{ marginBottom: 8 }}>
-                <strong>{c.name}</strong> — {c.issuer} <br />
+                <strong>{c.title}</strong> — {c.issuer} <br />
                 <small style={{ color: '#475569' }}>{c.date}</small>
               </li>
             ))}

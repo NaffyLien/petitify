@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import './App.css'
 import { ProfileSection } from './feat/profile/ProfileSection'
 import { EducationSection } from './feat/education/EducationSection'
@@ -23,8 +24,10 @@ import {
 } from './types/resume'
 import SlideModal from './components/SlideModal'
 import ResumePreview from './components/ResumePreview'
+import ExportPage from './pages/ExportPage'
 
-function App() {
+const App = () => {
+  const navigate = useNavigate()
   const [resume, setResume] = useState<ResumeState>(initialResumeState)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalSection, setModalSection] = useState<string | null>(null)
@@ -42,6 +45,7 @@ function App() {
   useEffect(() => {
     document.body.style.overflow = modalOpen ? 'hidden' : ''
   }, [modalOpen])
+
 
   const updateProfile = (field: keyof ProfileDetails, value: string) => {
     setResume((current) => ({
@@ -162,104 +166,121 @@ function App() {
   }
 
   return (
-    <main className="page-shell">
-      <aside className="sidebar">
-        <div className="brand-block">
-          <span className="brand-mark">P</span>
-          <div>
-            <p className="eyebrow">Resume builder</p>
-            <h1>Pocketify</h1>
-          </div>
-        </div>
+    <Routes>
+      <Route
+        path="/exp"
+        element={<ExportPage resume={resume} onBack={() => navigate('/')} />}
+      />
+      <Route
+        path="*"
+        element={(
+          <main className="page-shell">
+            <aside className="sidebar">
+              <div className="brand-block">
+                <span className="brand-mark">P</span>
+                <div>
+                  <p className="eyebrow">Resume builder</p>
+                  <h1>Pocketify</h1>
+                </div>
+              </div>
 
-        <nav className="nav-list" aria-label="Resume sections">
-          <button type="button" onClick={() => openModal('profile')}>Profile</button>
-          <button type="button" onClick={() => openModal('education')}>Education</button>
-          <button type="button" onClick={() => openModal('certificates')}>Certificates & Training</button>
-          <button type="button" onClick={() => openModal('experience')}>Experience</button>
-          <button type="button" onClick={() => openModal('projects')}>Key projects</button>
-          <button type="button" onClick={() => openModal('technical-skills')}>Technical skills</button>
-          <button type="button" onClick={() => openModal('soft-skills')}>Soft skills</button>
-          <button type="button" onClick={() => openModal('languages')}>Languages</button>
-        </nav>
-      </aside>
+              <nav className="nav-list" aria-label="Resume sections">
+                <button type="button" onClick={() => openModal('profile')}>Profile</button>
+                <button type="button" onClick={() => openModal('education')}>Education</button>
+                <button type="button" onClick={() => openModal('certificates')}>Certificates & Training</button>
+                <button type="button" onClick={() => openModal('experience')}>Experience</button>
+                <button type="button" onClick={() => openModal('projects')}>Key projects</button>
+                <button type="button" onClick={() => openModal('technical-skills')}>Technical skills</button>
+                <button type="button" onClick={() => openModal('soft-skills')}>Soft skills</button>
+                <button type="button" onClick={() => openModal('languages')}>Languages</button>
+              </nav>
+            </aside>
 
-      <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}>
-        {modalSection === 'profile' && (
-          <ProfileSection profile={resume.profile} onChange={updateProfile} />
+            <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}>
+              {modalSection === 'profile' && (
+                <ProfileSection profile={resume.profile} onChange={updateProfile} />
+              )}
+
+              {modalSection === 'education' && (
+                <EducationSection
+                  items={resume.education}
+                  onChange={updateEducation}
+                  onAdd={() => addItem('education')}
+                  onRemove={(id) => removeItem('education', id)}
+                />
+              )}
+
+              {modalSection === 'certificates' && (
+                <CertificatesSection
+                  items={resume.certificates}
+                  onChange={updateCertificate}
+                  onAdd={() => addItem('certificates')}
+                  onRemove={(id) => removeItem('certificates', id)}
+                />
+              )}
+
+              {modalSection === 'experience' && (
+                <ExperienceSection
+                  items={resume.experience}
+                  onChange={updateExperience}
+                  onAdd={() => addItem('experience')}
+                  onRemove={(id) => removeItem('experience', id)}
+                />
+              )}
+
+              {modalSection === 'projects' && (
+                <ProjectsSection
+                  items={resume.projects}
+                  onChange={updateProject}
+                  onAdd={() => addItem('projects')}
+                  onRemove={(id) => removeItem('projects', id)}
+                />
+              )}
+
+              {modalSection === 'technical-skills' && (
+                <SkillsSection
+                  items={resume.technicalSkills}
+                  onChange={(index, value) => updateSkillList('technicalSkills', index, value)}
+                  onAdd={() => addSkill('technicalSkills')}
+                  onRemove={(index) => removeSkill('technicalSkills', index)}
+                />
+              )}
+
+              {modalSection === 'soft-skills' && (
+                <SoftSkillsSection
+                  items={resume.softSkills}
+                  onChange={(index, value) => updateSkillList('softSkills', index, value)}
+                  onAdd={() => addSkill('softSkills')}
+                  onRemove={(index) => removeSkill('softSkills', index)}
+                />
+              )}
+
+              {modalSection === 'languages' && (
+                <LanguagesSection
+                  items={resume.languages}
+                  onChange={(index, value) => updateSkillList('languages', index, value)}
+                  onAdd={() => addSkill('languages')}
+                  onRemove={(index) => removeSkill('languages', index)}
+                />
+              )}
+            </SlideModal>
+
+            <section className="content-panel">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+                <h2 style={{ margin: 0 }}>Resume</h2>
+                <div>
+                  <button type="button" className="primary-button" onClick={() => navigate('/exp')}>Export profile</button>
+                </div>
+              </div>
+
+              <ResumePreview resume={resume} />
+            </section>
+          </main>
         )}
-
-        {modalSection === 'education' && (
-          <EducationSection
-            items={resume.education}
-            onChange={updateEducation}
-            onAdd={() => addItem('education')}
-            onRemove={(id) => removeItem('education', id)}
-          />
-        )}
-
-        {modalSection === 'certificates' && (
-          <CertificatesSection
-            items={resume.certificates}
-            onChange={updateCertificate}
-            onAdd={() => addItem('certificates')}
-            onRemove={(id) => removeItem('certificates', id)}
-          />
-        )}
-
-        {modalSection === 'experience' && (
-          <ExperienceSection
-            items={resume.experience}
-            onChange={updateExperience}
-            onAdd={() => addItem('experience')}
-            onRemove={(id) => removeItem('experience', id)}
-          />
-        )}
-
-        {modalSection === 'projects' && (
-          <ProjectsSection
-            items={resume.projects}
-            onChange={updateProject}
-            onAdd={() => addItem('projects')}
-            onRemove={(id) => removeItem('projects', id)}
-          />
-        )}
-
-        {modalSection === 'technical-skills' && (
-          <SkillsSection
-            items={resume.technicalSkills}
-            onChange={(index, value) => updateSkillList('technicalSkills', index, value)}
-            onAdd={() => addSkill('technicalSkills')}
-            onRemove={(index) => removeSkill('technicalSkills', index)}
-          />
-        )}
-
-        {modalSection === 'soft-skills' && (
-          <SoftSkillsSection
-            items={resume.softSkills}
-            onChange={(index, value) => updateSkillList('softSkills', index, value)}
-            onAdd={() => addSkill('softSkills')}
-            onRemove={(index) => removeSkill('softSkills', index)}
-          />
-        )}
-
-        {modalSection === 'languages' && (
-          <LanguagesSection
-            items={resume.languages}
-            onChange={(index, value) => updateSkillList('languages', index, value)}
-            onAdd={() => addSkill('languages')}
-            onRemove={(index) => removeSkill('languages', index)}
-          />
-        )}
-      </SlideModal>
-
-      <section className="content-panel">
-        <ResumePreview resume={resume} />
-
-        
-      </section>
-    </main>
+      />
+    </Routes>
   )
+
 }
 
 export default App

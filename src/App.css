@@ -319,3 +319,12 @@ textarea {
   overflow: auto;
   padding-bottom: 40px;
 }
+
+/* export-page helpers */
+.keyword-btn {
+  padding:6px 10px; border-radius:8px; border:1px solid #e2e8f0; background:white; cursor:pointer
+}
+
+.keyword-btn.active { background:#eef2ff; border-color:#c7d2fe; }
+
+.keyword-btn.primary-button { background: linear-gradient(135deg, #7c3aed, #2563eb); color: white; border: none }
