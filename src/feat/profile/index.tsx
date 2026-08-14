@@ -1,6 +1,7 @@
 import { Field } from '../../components/Field'
 import { SectionHeader } from '../../components/SectionHeader'
 import type { ProfileDetails } from '../../types/resume'
+import './ProfileSection.css'
 
 type ProfileSectionProps = {
   profile: ProfileDetails

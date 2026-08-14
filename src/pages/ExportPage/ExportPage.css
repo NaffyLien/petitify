@@ -1,0 +1,83 @@
+.export-page {
+  padding: 24px;
+}
+
+.export-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.export-page-header-left {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.export-page-header-right {
+  display: flex;
+  gap: 8px;
+}
+
+.export-page-title {
+  margin: 0;
+}
+
+.export-page-filters {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.export-page-filter-label {
+  font-weight: 600;
+}
+
+.export-page-filter-input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.export-page-sections {
+  margin-top: 18px;
+}
+
+.export-section {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.export-section-title {
+  margin: 0;
+}
+
+.export-section-content {
+  margin-top: 8px;
+}
+
+.export-entry {
+  margin-bottom: 10px;
+}
+
+.export-meta {
+  color: #475569;
+}
+
+.export-desc {
+  color: #334155;
+}
+
+.export-profile-name {
+  font-size: 18px;
+}
+
+.export-footer {
+  margin-top: 26px;
+  color: #94a3b8;
+}

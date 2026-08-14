@@ -1,19 +1,20 @@
 import { PillList } from '../../components/PillList'
+import './LanguagesSection.css'
 
-type SoftSkillsSectionProps = {
+type LanguagesSectionProps = {
   items: string[]
   onChange: (index: number, value: string) => void
   onAdd: () => void
   onRemove: (index: number) => void
 }
 
-export function SoftSkillsSection({ items, onChange, onAdd, onRemove }: SoftSkillsSectionProps) {
+export function LanguagesSection({ items, onChange, onAdd, onRemove }: LanguagesSectionProps) {
   return (
     <PillList
-      id="soft-skills"
-      eyebrow="Soft skills"
-      title="Work style"
-      buttonLabel="Add soft skill"
+      id="languages"
+      eyebrow="Languages"
+      title="Language proficiency"
+      buttonLabel="Add language"
       items={items}
       onAdd={onAdd}
       onChange={onChange}

@@ -1,6 +1,7 @@
 import { Field } from '../../components/Field'
 import { SectionHeader } from '../../components/SectionHeader'
 import type { ProjectItem } from '../../types/resume'
+import './ProjectsSection.css'
 
 type ProjectsSectionProps = {
   items: ProjectItem[]

@@ -1,23 +1,24 @@
 import { Field } from '../../components/Field'
 import { SectionHeader } from '../../components/SectionHeader'
-import type { ExperienceItem } from '../../types/resume'
+import type { EducationItem } from '../../types/resume'
+import './EducationSection.css'
 
-type ExperienceSectionProps = {
-  items: ExperienceItem[]
-  onChange: (id: number, field: keyof ExperienceItem, value: string) => void
+type EducationSectionProps = {
+  items: EducationItem[]
+  onChange: (id: number, field: keyof EducationItem, value: string) => void
   onAdd: () => void
   onRemove: (id: number) => void
 }
 
-export function ExperienceSection({ items, onChange, onAdd, onRemove }: ExperienceSectionProps) {
+export function EducationSection({ items, onChange, onAdd, onRemove }: EducationSectionProps) {
   return (
-    <section className="section-card" id="experience">
+    <section className="section-card" id="education">
       <SectionHeader
-        eyebrow="Experience"
-        title="Work history"
+        eyebrow="Education"
+        title="Academic background"
         action={
           <button type="button" className="ghost-button" onClick={onAdd}>
-            + Add experience
+            + Add education
           </button>
         }
       />
@@ -25,7 +26,7 @@ export function ExperienceSection({ items, onChange, onAdd, onRemove }: Experien
       {items.map((entry, index) => (
         <div className="entry-card" key={entry.id}>
           <div className="entry-actions">
-            <span>Experience #{index + 1}</span>
+            <span>Education #{index + 1}</span>
             {items.length > 1 && (
               <button type="button" onClick={() => onRemove(entry.id)}>
                 Remove
@@ -34,17 +35,24 @@ export function ExperienceSection({ items, onChange, onAdd, onRemove }: Experien
           </div>
 
           <div className="grid two-columns">
-            <Field label="Job title">
+            <Field label="School / University">
               <input
-                value={entry.role}
-                onChange={(event) => onChange(entry.id, 'role', event.target.value)}
+                value={entry.institution}
+                onChange={(event) => onChange(entry.id, 'institution', event.target.value)}
               />
             </Field>
 
-            <Field label="Company">
+            <Field label="Degree">
               <input
-                value={entry.company}
-                onChange={(event) => onChange(entry.id, 'company', event.target.value)}
+                value={entry.degree}
+                onChange={(event) => onChange(entry.id, 'degree', event.target.value)}
+              />
+            </Field>
+
+            <Field label="Field of study">
+              <input
+                value={entry.field}
+                onChange={(event) => onChange(entry.id, 'field', event.target.value)}
               />
             </Field>
 
@@ -53,10 +61,6 @@ export function ExperienceSection({ items, onChange, onAdd, onRemove }: Experien
                 value={entry.location}
                 onChange={(event) => onChange(entry.id, 'location', event.target.value)}
               />
-            </Field>
-
-            <Field label="Country">
-              <input value="" readOnly />
             </Field>
 
             <Field label="Start date">
@@ -75,9 +79,9 @@ export function ExperienceSection({ items, onChange, onAdd, onRemove }: Experien
               />
             </Field>
 
-            <Field label="Role description" fullWidth>
+            <Field label="Details" fullWidth>
               <textarea
-                rows={4}
+                rows={3}
                 value={entry.description}
                 onChange={(event) => onChange(entry.id, 'description', event.target.value)}
               />

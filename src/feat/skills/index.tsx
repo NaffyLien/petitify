@@ -1,4 +1,5 @@
 import { PillList } from '../../components/PillList'
+import './SkillsSection.css'
 
 type SkillsSectionProps = {
   items: string[]

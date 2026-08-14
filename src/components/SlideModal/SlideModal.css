@@ -1,0 +1,45 @@
+.modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 10, 23, 0.5);
+}
+
+.slide-panel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: min(520px, 100%);
+  background: rgba(255, 255, 255, 0.98);
+  border-left: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: -10px 0 40px rgba(2, 6, 23, 0.16);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  transform: translateX(0);
+  animation: slideIn 260ms ease;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.slide-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.slide-panel-body {
+  overflow: auto;
+  padding-bottom: 40px;
+}

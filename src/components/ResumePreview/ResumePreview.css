@@ -1,0 +1,59 @@
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.resume-preview-name {
+  margin: 0;
+}
+
+.resume-preview-subtitle {
+  color: #475569;
+  margin-top: 6px;
+}
+
+.resume-preview-contact-right {
+  text-align: right;
+}
+
+.resume-preview-section {
+  margin-top: 16px;
+}
+
+.resume-preview-section-title {
+  margin: 0 0 8px 0;
+}
+
+.resume-preview-section-text {
+  margin: 0;
+  color: #334155;
+}
+
+.resume-preview-list {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.resume-preview-item {
+  margin-bottom: 8px;
+}
+
+.resume-preview-meta {
+  color: #475569;
+}
+
+.resume-preview-desc {
+  color: #334155;
+}
+
+.resume-preview-skills {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.resume-preview-skill-text {
+  color: #334155;
+}

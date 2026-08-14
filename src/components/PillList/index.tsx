@@ -1,4 +1,5 @@
-import { SectionHeader } from './SectionHeader'
+import { SectionHeader } from '../SectionHeader'
+import './PillList.css'
 
 type PillListProps = {
   id?: string

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import './SlideModal.css'
 
 type SlideModalProps = {
   open: boolean

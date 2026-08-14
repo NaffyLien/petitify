@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import './App.css'
-import { ProfileSection } from './feat/profile/ProfileSection'
-import { EducationSection } from './feat/education/EducationSection'
-import { CertificatesSection } from './feat/certificates/CertificatesSection'
-import { ExperienceSection } from './feat/experience/ExperienceSection'
-import { ProjectsSection } from './feat/projects/ProjectsSection'
-import { SkillsSection } from './feat/skills/SkillsSection'
-import { SoftSkillsSection } from './feat/soft-skills/SoftSkillsSection'
-import { LanguagesSection } from './feat/languages/LanguagesSection'
+import { ProfileSection } from './feat/profile'
+import { EducationSection } from './feat/education'
+import { CertificatesSection } from './feat/certificates'
+import { ExperienceSection } from './feat/experience'
+import { ProjectsSection } from './feat/projects'
+import { SkillsSection } from './feat/skills'
+import { SoftSkillsSection } from './feat/soft-skills'
+import { LanguagesSection } from './feat/languages'
 import {
   createCertificate,
   createEducation,
@@ -168,7 +168,7 @@ const App = () => {
   return (
     <Routes>
       <Route
-        path="/exp"
+        path="/pocketify/exp"
         element={<ExportPage resume={resume} onBack={() => navigate('/')} />}
       />
       <Route
@@ -269,7 +269,7 @@ const App = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
                 <h2 style={{ margin: 0 }}>Resume</h2>
                 <div>
-                  <button type="button" className="primary-button" onClick={() => navigate('/exp')}>Export profile</button>
+                  <button type="button" className="primary-button" onClick={() => navigate('/pocketify/exp')}>Export profile</button>
                 </div>
               </div>
 

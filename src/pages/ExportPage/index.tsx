@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import type { ResumeState } from '../types/resume'
+import type { ResumeState } from '../../types/resume'
+import './ExportPage.css'
 
 type ExportPageProps = {
   resume: ResumeState
@@ -45,26 +46,26 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
   const filterText = filter.trim()
 
   return (
-    <div style={{ padding: 24 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+    <div className="export-page">
+      <div className="export-page-header">
+        <div className="export-page-header-left">
           <button className="ghost-button" onClick={onBack}>Back</button>
-          <h1 style={{ margin: 0 }}>Exported profile</h1>
+          <h1 className="export-page-title">Exported profile</h1>
         </div>
 
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div className="export-page-header-right">
           <button className="keyword-btn primary-button" onClick={downloadJSON}>Download JSON</button>
         </div>
       </div>
 
-      <div style={{ marginTop: 16, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-        <label style={{ fontWeight: 600 }}>Filter by keyword:</label>
+      <div className="export-page-filters">
+        <label className="export-page-filter-label">Filter by keyword:</label>
         <input
           type="text"
           value={filter}
           onChange={(e) => { setFilter(e.target.value); setActiveKeyword(null) }}
           placeholder="e.g. Mobile development"
-          style={{ padding: 8, borderRadius: 8, border: '1px solid #e2e8f0' }}
+          className="export-page-filter-input"
         />
 
         {keywords.map((k) => (
@@ -81,33 +82,33 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
         <button className="keyword-btn" onClick={() => { setFilter(''); setActiveKeyword(null) }}>Clear</button>
       </div>
 
-      <div style={{ marginTop: 18 }}>
+      <div className="export-page-sections">
         {/* Profile */}
         {(!filterText || matchesProfile(filterText)) && (
-          <section style={{ background: 'white', padding: 16, borderRadius: 12, marginBottom: 12 }}>
-            <h2 style={{ margin: 0 }}>Profile</h2>
-            <div style={{ marginTop: 8 }}>
-              <strong style={{ fontSize: 18 }}>{resume.profile.name || 'Your name'}</strong>
-              <div style={{ color: '#475569' }}>{resume.profile.title} • {resume.profile.location}</div>
-              <div style={{ color: '#475569' }}>{resume.profile.email} {resume.profile.phone}</div>
-              {resume.profile.summary && <p style={{ color: '#334155' }}>{resume.profile.summary}</p>}
+          <section className="export-section">
+            <h2 className="export-section-title">Profile</h2>
+            <div className="export-section-content">
+              <strong className="export-profile-name">{resume.profile.name || 'Your name'}</strong>
+              <div className="export-meta">{resume.profile.title} • {resume.profile.location}</div>
+              <div className="export-meta">{resume.profile.email} {resume.profile.phone}</div>
+              {resume.profile.summary && <p className="export-desc">{resume.profile.summary}</p>}
             </div>
           </section>
         )}
 
         {/* Education */}
         {resume.education.length > 0 && (
-          <section style={{ background: 'white', padding: 16, borderRadius: 12, marginBottom: 12 }}>
-            <h2 style={{ margin: 0 }}>Education</h2>
-            <div style={{ marginTop: 8 }}>
+          <section className="export-section">
+            <h2 className="export-section-title">Education</h2>
+            <div className="export-section-content">
               {resume.education.map((e) => {
                 const txt = [e.degree, e.institution, e.field, e.description].filter(Boolean).join(' ')
                 if (filterText && !txt.toLowerCase().includes(filterText.toLowerCase())) return null
                 return (
-                  <div key={e.id} style={{ marginBottom: 10 }}>
+                  <div key={e.id} className="export-entry">
                     <strong>{e.degree}</strong> — {e.institution}
-                    <div style={{ color: '#475569' }}>{e.startDate} — {e.endDate} • {e.location}</div>
-                    {e.description && <div style={{ color: '#334155' }}>{e.description}</div>}
+                    <div className="export-meta">{e.startDate} — {e.endDate} • {e.location}</div>
+                    {e.description && <div className="export-desc">{e.description}</div>}
                   </div>
                 )
               })}
@@ -117,17 +118,17 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
 
         {/* Experience */}
         {resume.experience.length > 0 && (
-          <section style={{ background: 'white', padding: 16, borderRadius: 12, marginBottom: 12 }}>
-            <h2 style={{ margin: 0 }}>Experience</h2>
-            <div style={{ marginTop: 8 }}>
+          <section className="export-section">
+            <h2 className="export-section-title">Experience</h2>
+            <div className="export-section-content">
               {resume.experience.map((ex) => {
                 const txt = [ex.role, ex.company, ex.description].filter(Boolean).join(' ')
                 if (filterText && !txt.toLowerCase().includes(filterText.toLowerCase())) return null
                 return (
-                  <div key={ex.id} style={{ marginBottom: 10 }}>
+                  <div key={ex.id} className="export-entry">
                     <strong>{ex.role}</strong> — {ex.company}
-                    <div style={{ color: '#475569' }}>{ex.startDate} — {ex.endDate} • {ex.location}</div>
-                    {ex.description && <div style={{ color: '#334155' }}>{ex.description}</div>}
+                    <div className="export-meta">{ex.startDate} — {ex.endDate} • {ex.location}</div>
+                    {ex.description && <div className="export-desc">{ex.description}</div>}
                   </div>
                 )
               })}
@@ -137,16 +138,16 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
 
         {/* Projects */}
         {resume.projects.length > 0 && (
-          <section style={{ background: 'white', padding: 16, borderRadius: 12, marginBottom: 12 }}>
-            <h2 style={{ margin: 0 }}>Projects</h2>
-            <div style={{ marginTop: 8 }}>
+          <section className="export-section">
+            <h2 className="export-section-title">Projects</h2>
+            <div className="export-section-content">
               {resume.projects.map((p) => {
                 const txt = [p.name, p.description, p.link].filter(Boolean).join(' ')
                 if (filterText && !txt.toLowerCase().includes(filterText.toLowerCase())) return null
                 return (
-                  <div key={p.id} style={{ marginBottom: 10 }}>
-                    <strong>{p.name}</strong> — <small style={{ color: '#475569' }}>{p.link}</small>
-                    {p.description && <div style={{ color: '#334155' }}>{p.description}</div>}
+                  <div key={p.id} className="export-entry">
+                    <strong>{p.name}</strong> — <small className="export-meta">{p.link}</small>
+                    {p.description && <div className="export-desc">{p.description}</div>}
                   </div>
                 )
               })}
@@ -156,16 +157,16 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
 
         {/* Certificates */}
         {resume.certificates.length > 0 && (
-          <section style={{ background: 'white', padding: 16, borderRadius: 12, marginBottom: 12 }}>
-            <h2 style={{ margin: 0 }}>Certificates</h2>
-            <div style={{ marginTop: 8 }}>
+          <section className="export-section">
+            <h2 className="export-section-title">Certificates</h2>
+            <div className="export-section-content">
               {resume.certificates.map((c) => {
                 const txt = [c.title, c.issuer, c.description].filter(Boolean).join(' ')
                 if (filterText && !txt.toLowerCase().includes(filterText.toLowerCase())) return null
                 return (
-                  <div key={c.id} style={{ marginBottom: 10 }}>
+                  <div key={c.id} className="export-entry">
                     <strong>{c.title}</strong> — {c.issuer}
-                    <div style={{ color: '#475569' }}>{c.date}</div>
+                    <div className="export-meta">{c.date}</div>
                   </div>
                 )
               })}
@@ -175,9 +176,9 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
 
         {/* Skills & Languages */}
         {combinedSkills.length > 0 && (!filterText || combinedSkills.join(' ').toLowerCase().includes(filterText.toLowerCase())) && (
-          <section style={{ background: 'white', padding: 16, borderRadius: 12, marginBottom: 12 }}>
-            <h2 style={{ margin: 0 }}>Skills & Languages</h2>
-            <div style={{ marginTop: 8 }}>
+          <section className="export-section">
+            <h2 className="export-section-title">Skills & Languages</h2>
+            <div className="export-section-content">
               {resume.technicalSkills.length > 0 && (
                 <div><strong>Technical:</strong> {resume.technicalSkills.join(', ')}</div>
               )}
@@ -192,7 +193,7 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
         )}
       </div>
 
-      <footer style={{ marginTop: 26, color: '#94a3b8' }}>Use the filter to show only sections matching the entered keyword.</footer>
+      <footer className="export-footer">Use the filter to show only sections matching the entered keyword.</footer>
     </div>
   )
 }
