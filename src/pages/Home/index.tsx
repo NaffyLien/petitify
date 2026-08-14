@@ -95,7 +95,7 @@ function AppContent() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
           <h2 style={{ margin: 0 }}>Resume</h2>
           <div>
-            <button type="button" className="primary-button" onClick={() => navigate('/pocketify/exp')}>Export profile</button>
+            <button type="button" className="primary-button" onClick={() => navigate('/pocketify/walk')}>Export profile</button>
           </div>
         </div>
 
