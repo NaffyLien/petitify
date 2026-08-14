@@ -1,24 +1,20 @@
 import { PillList } from '../../components/PillList'
 import './SkillsSection.css'
+import { useResume } from '../../contexts/useResume'
 
-type SkillsSectionProps = {
-  items: string[]
-  onChange: (index: number, value: string) => void
-  onAdd: () => void
-  onRemove: (index: number) => void
-}
+export function SkillsSection() {
+  const { resume, updateSkillList, addSkill, removeSkill } = useResume()
 
-export function SkillsSection({ items, onChange, onAdd, onRemove }: SkillsSectionProps) {
   return (
     <PillList
       id="technical-skills"
       eyebrow="Technical skills"
       title="Tools and stacks"
       buttonLabel="Add skill"
-      items={items}
-      onAdd={onAdd}
-      onChange={onChange}
-      onRemove={onRemove}
+      items={resume.technicalSkills}
+      onAdd={addSkill.bind(null, 'technicalSkills')}
+      onChange={(index, value) => updateSkillList('technicalSkills', index, value)}
+      onRemove={(index) => removeSkill('technicalSkills', index)}
     />
   )
 }

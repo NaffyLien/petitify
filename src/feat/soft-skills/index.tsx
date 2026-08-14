@@ -1,24 +1,20 @@
 import { PillList } from '../../components/PillList'
 import './SoftSkillsSection.css'
+import { useResume } from '../../contexts/useResume'
 
-type SoftSkillsSectionProps = {
-  items: string[]
-  onChange: (index: number, value: string) => void
-  onAdd: () => void
-  onRemove: (index: number) => void
-}
+export function SoftSkillsSection() {
+  const { resume, updateSkillList, addSkill, removeSkill } = useResume()
 
-export function SoftSkillsSection({ items, onChange, onAdd, onRemove }: SoftSkillsSectionProps) {
   return (
     <PillList
       id="soft-skills"
       eyebrow="Soft skills"
       title="Work style"
       buttonLabel="Add soft skill"
-      items={items}
-      onAdd={onAdd}
-      onChange={onChange}
-      onRemove={onRemove}
+      items={resume.softSkills}
+      onAdd={addSkill.bind(null, 'softSkills')}
+      onChange={(index, value) => updateSkillList('softSkills', index, value)}
+      onRemove={(index) => removeSkill('softSkills', index)}
     />
   )
 }

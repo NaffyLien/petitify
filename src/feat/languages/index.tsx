@@ -1,24 +1,20 @@
 import { PillList } from '../../components/PillList'
 import './LanguagesSection.css'
+import { useResume } from '../../contexts/useResume'
 
-type LanguagesSectionProps = {
-  items: string[]
-  onChange: (index: number, value: string) => void
-  onAdd: () => void
-  onRemove: (index: number) => void
-}
+export function LanguagesSection() {
+  const { resume, updateSkillList, addSkill, removeSkill } = useResume()
 
-export function LanguagesSection({ items, onChange, onAdd, onRemove }: LanguagesSectionProps) {
   return (
     <PillList
       id="languages"
       eyebrow="Languages"
       title="Language proficiency"
       buttonLabel="Add language"
-      items={items}
-      onAdd={onAdd}
-      onChange={onChange}
-      onRemove={onRemove}
+      items={resume.languages}
+      onAdd={addSkill.bind(null, 'languages')}
+      onChange={(index, value) => updateSkillList('languages', index, value)}
+      onRemove={(index) => removeSkill('languages', index)}
     />
   )
 }

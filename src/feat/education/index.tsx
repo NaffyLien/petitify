@@ -1,34 +1,29 @@
 import { Field } from '../../components/Field'
 import { SectionHeader } from '../../components/SectionHeader'
-import type { EducationItem } from '../../types/resume'
 import './EducationSection.css'
+import { useResume } from '../../contexts/useResume'
 
-type EducationSectionProps = {
-  items: EducationItem[]
-  onChange: (id: number, field: keyof EducationItem, value: string) => void
-  onAdd: () => void
-  onRemove: (id: number) => void
-}
+export function EducationSection() {
+  const { resume, updateEducation, addEducation, removeEducation } = useResume()
 
-export function EducationSection({ items, onChange, onAdd, onRemove }: EducationSectionProps) {
   return (
     <section className="section-card" id="education">
       <SectionHeader
         eyebrow="Education"
         title="Academic background"
         action={
-          <button type="button" className="ghost-button" onClick={onAdd}>
+          <button type="button" className="ghost-button" onClick={addEducation}>
             + Add education
           </button>
         }
       />
 
-      {items.map((entry, index) => (
+      {resume.education.map((entry, index) => (
         <div className="entry-card" key={entry.id}>
           <div className="entry-actions">
             <span>Education #{index + 1}</span>
-            {items.length > 1 && (
-              <button type="button" onClick={() => onRemove(entry.id)}>
+            {resume.education.length > 1 && (
+              <button type="button" onClick={() => removeEducation(entry.id)}>
                 Remove
               </button>
             )}
@@ -38,28 +33,28 @@ export function EducationSection({ items, onChange, onAdd, onRemove }: Education
             <Field label="School / University">
               <input
                 value={entry.institution}
-                onChange={(event) => onChange(entry.id, 'institution', event.target.value)}
+                onChange={(event) => updateEducation(entry.id, 'institution', event.target.value)}
               />
             </Field>
 
             <Field label="Degree">
               <input
                 value={entry.degree}
-                onChange={(event) => onChange(entry.id, 'degree', event.target.value)}
+                onChange={(event) => updateEducation(entry.id, 'degree', event.target.value)}
               />
             </Field>
 
             <Field label="Field of study">
               <input
                 value={entry.field}
-                onChange={(event) => onChange(entry.id, 'field', event.target.value)}
+                onChange={(event) => updateEducation(entry.id, 'field', event.target.value)}
               />
             </Field>
 
             <Field label="Location">
               <input
                 value={entry.location}
-                onChange={(event) => onChange(entry.id, 'location', event.target.value)}
+                onChange={(event) => updateEducation(entry.id, 'location', event.target.value)}
               />
             </Field>
 
@@ -67,7 +62,7 @@ export function EducationSection({ items, onChange, onAdd, onRemove }: Education
               <input
                 type="month"
                 value={entry.startDate}
-                onChange={(event) => onChange(entry.id, 'startDate', event.target.value)}
+                onChange={(event) => updateEducation(entry.id, 'startDate', event.target.value)}
               />
             </Field>
 
@@ -75,7 +70,7 @@ export function EducationSection({ items, onChange, onAdd, onRemove }: Education
               <input
                 type="month"
                 value={entry.endDate}
-                onChange={(event) => onChange(entry.id, 'endDate', event.target.value)}
+                onChange={(event) => updateEducation(entry.id, 'endDate', event.target.value)}
               />
             </Field>
 
@@ -83,7 +78,7 @@ export function EducationSection({ items, onChange, onAdd, onRemove }: Education
               <textarea
                 rows={3}
                 value={entry.description}
-                onChange={(event) => onChange(entry.id, 'description', event.target.value)}
+                onChange={(event) => updateEducation(entry.id, 'description', event.target.value)}
               />
             </Field>
           </div>

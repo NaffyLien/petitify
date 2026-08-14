@@ -1,14 +1,11 @@
 import { Field } from '../../components/Field'
 import { SectionHeader } from '../../components/SectionHeader'
-import type { ProfileDetails } from '../../types/resume'
 import './ProfileSection.css'
+import { useResume } from '../../contexts/useResume'
 
-type ProfileSectionProps = {
-  profile: ProfileDetails
-  onChange: (field: keyof ProfileDetails, value: string) => void
-}
+export function ProfileSection() {
+  const { resume, updateProfile } = useResume()
 
-export function ProfileSection({ profile, onChange }: ProfileSectionProps) {
   return (
     <section className="profile-card" id="profile">
       <SectionHeader
@@ -20,44 +17,44 @@ export function ProfileSection({ profile, onChange }: ProfileSectionProps) {
       <div className="grid two-columns">
         <Field label="Full name">
           <input
-            value={profile.name}
-            onChange={(event) => onChange('name', event.target.value)}
+            value={resume.profile.name}
+            onChange={(event) => updateProfile('name', event.target.value)}
           />
         </Field>
 
         <Field label="Professional title">
           <input
-            value={profile.title}
-            onChange={(event) => onChange('title', event.target.value)}
+            value={resume.profile.title}
+            onChange={(event) => updateProfile('title', event.target.value)}
           />
         </Field>
 
         <Field label="Email">
           <input
-            value={profile.email}
-            onChange={(event) => onChange('email', event.target.value)}
+            value={resume.profile.email}
+            onChange={(event) => updateProfile('email', event.target.value)}
           />
         </Field>
 
         <Field label="Phone">
           <input
-            value={profile.phone}
-            onChange={(event) => onChange('phone', event.target.value)}
+            value={resume.profile.phone}
+            onChange={(event) => updateProfile('phone', event.target.value)}
           />
         </Field>
 
         <Field label="Location" fullWidth>
           <input
-            value={profile.location}
-            onChange={(event) => onChange('location', event.target.value)}
+            value={resume.profile.location}
+            onChange={(event) => updateProfile('location', event.target.value)}
           />
         </Field>
 
         <Field label="Professional summary" fullWidth>
           <textarea
             rows={4}
-            value={profile.summary}
-            onChange={(event) => onChange('summary', event.target.value)}
+            value={resume.profile.summary}
+            onChange={(event) => updateProfile('summary', event.target.value)}
           />
         </Field>
       </div>

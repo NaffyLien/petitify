@@ -9,26 +9,15 @@ import { ProjectsSection } from './feat/projects'
 import { SkillsSection } from './feat/skills'
 import { SoftSkillsSection } from './feat/soft-skills'
 import { LanguagesSection } from './feat/languages'
-import {
-  createCertificate,
-  createEducation,
-  createExperience,
-  createProject,
-  initialResumeState,
-  type CertificateItem,
-  type EducationItem,
-  type ExperienceItem,
-  type ProjectItem,
-  type ProfileDetails,
-  type ResumeState,
-} from './types/resume'
 import SlideModal from './components/SlideModal'
 import ResumePreview from './components/ResumePreview'
 import ExportPage from './pages/ExportPage'
+import { useResume } from './contexts/useResume'
 
-const App = () => {
+function AppContent() {
   const navigate = useNavigate()
-  const [resume, setResume] = useState<ResumeState>(initialResumeState)
+  const { resume } = useResume()
+
   const [modalOpen, setModalOpen] = useState(false)
   const [modalSection, setModalSection] = useState<string | null>(null)
 
@@ -45,125 +34,6 @@ const App = () => {
   useEffect(() => {
     document.body.style.overflow = modalOpen ? 'hidden' : ''
   }, [modalOpen])
-
-
-  const updateProfile = (field: keyof ProfileDetails, value: string) => {
-    setResume((current) => ({
-      ...current,
-      profile: {
-        ...current.profile,
-        [field]: value,
-      },
-    }))
-  }
-
-  const updateEducation = (id: number, field: keyof EducationItem, value: string) => {
-    setResume((current) => ({
-      ...current,
-      education: current.education.map((entry) =>
-        entry.id === id ? { ...entry, [field]: value } : entry,
-      ),
-    }))
-  }
-
-  const updateCertificate = (id: number, field: keyof CertificateItem, value: string) => {
-    setResume((current) => ({
-      ...current,
-      certificates: current.certificates.map((entry) =>
-        entry.id === id ? { ...entry, [field]: value } : entry,
-      ),
-    }))
-  }
-
-  const updateExperience = (id: number, field: keyof ExperienceItem, value: string) => {
-    setResume((current) => ({
-      ...current,
-      experience: current.experience.map((entry) =>
-        entry.id === id ? { ...entry, [field]: value } : entry,
-      ),
-    }))
-  }
-
-  const updateProject = (id: number, field: keyof ProjectItem, value: string) => {
-    setResume((current) => ({
-      ...current,
-      projects: current.projects.map((entry) =>
-        entry.id === id ? { ...entry, [field]: value } : entry,
-      ),
-    }))
-  }
-
-  const addItem = (key: 'education' | 'certificates' | 'experience' | 'projects') => {
-    setResume((current) => {
-      const nextId = Date.now()
-
-      if (key === 'education') {
-        return {
-          ...current,
-          education: [...current.education, createEducation(nextId)],
-        }
-      }
-
-      if (key === 'certificates') {
-        return {
-          ...current,
-          certificates: [...current.certificates, createCertificate(nextId)],
-        }
-      }
-
-      if (key === 'experience') {
-        return {
-          ...current,
-          experience: [...current.experience, createExperience(nextId)],
-        }
-      }
-
-      return {
-        ...current,
-        projects: [...current.projects, createProject(nextId)],
-      }
-    })
-  }
-
-  const removeItem = (
-    key: 'education' | 'certificates' | 'experience' | 'projects',
-    id: number,
-  ) => {
-    setResume((current) => ({
-      ...current,
-      [key]: current[key].filter((entry) => entry.id !== id),
-    }))
-  }
-
-  const updateSkillList = (
-    key: 'technicalSkills' | 'softSkills' | 'languages',
-    index: number,
-    value: string,
-  ) => {
-    setResume((current) => ({
-      ...current,
-      [key]: current[key].map((entry, itemIndex) =>
-        itemIndex === index ? value : entry,
-      ),
-    }))
-  }
-
-  const addSkill = (key: 'technicalSkills' | 'softSkills' | 'languages') => {
-    setResume((current) => ({
-      ...current,
-      [key]: [...current[key], ''],
-    }))
-  }
-
-  const removeSkill = (
-    key: 'technicalSkills' | 'softSkills' | 'languages',
-    index: number,
-  ) => {
-    setResume((current) => ({
-      ...current,
-      [key]: current[key].filter((_, itemIndex) => itemIndex !== index),
-    }))
-  }
 
   return (
     <Routes>
@@ -198,70 +68,35 @@ const App = () => {
 
             <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}>
               {modalSection === 'profile' && (
-                <ProfileSection profile={resume.profile} onChange={updateProfile} />
+                <ProfileSection />
               )}
 
               {modalSection === 'education' && (
-                <EducationSection
-                  items={resume.education}
-                  onChange={updateEducation}
-                  onAdd={() => addItem('education')}
-                  onRemove={(id) => removeItem('education', id)}
-                />
+                <EducationSection />
               )}
 
               {modalSection === 'certificates' && (
-                <CertificatesSection
-                  items={resume.certificates}
-                  onChange={updateCertificate}
-                  onAdd={() => addItem('certificates')}
-                  onRemove={(id) => removeItem('certificates', id)}
-                />
+                <CertificatesSection />
               )}
 
               {modalSection === 'experience' && (
-                <ExperienceSection
-                  items={resume.experience}
-                  onChange={updateExperience}
-                  onAdd={() => addItem('experience')}
-                  onRemove={(id) => removeItem('experience', id)}
-                />
+                <ExperienceSection />
               )}
 
               {modalSection === 'projects' && (
-                <ProjectsSection
-                  items={resume.projects}
-                  onChange={updateProject}
-                  onAdd={() => addItem('projects')}
-                  onRemove={(id) => removeItem('projects', id)}
-                />
+                <ProjectsSection />
               )}
 
               {modalSection === 'technical-skills' && (
-                <SkillsSection
-                  items={resume.technicalSkills}
-                  onChange={(index, value) => updateSkillList('technicalSkills', index, value)}
-                  onAdd={() => addSkill('technicalSkills')}
-                  onRemove={(index) => removeSkill('technicalSkills', index)}
-                />
+                <SkillsSection />
               )}
 
               {modalSection === 'soft-skills' && (
-                <SoftSkillsSection
-                  items={resume.softSkills}
-                  onChange={(index, value) => updateSkillList('softSkills', index, value)}
-                  onAdd={() => addSkill('softSkills')}
-                  onRemove={(index) => removeSkill('softSkills', index)}
-                />
+                <SoftSkillsSection />
               )}
 
               {modalSection === 'languages' && (
-                <LanguagesSection
-                  items={resume.languages}
-                  onChange={(index, value) => updateSkillList('languages', index, value)}
-                  onAdd={() => addSkill('languages')}
-                  onRemove={(index) => removeSkill('languages', index)}
-                />
+                <LanguagesSection />
               )}
             </SlideModal>
 
@@ -280,7 +115,6 @@ const App = () => {
       />
     </Routes>
   )
-
 }
 
-export default App
+export default AppContent
