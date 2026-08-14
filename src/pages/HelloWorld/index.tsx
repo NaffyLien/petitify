@@ -4,7 +4,7 @@ import { useGoogleAuth } from "../../contexts/GoogleAuthContext"
 
 const HelloWorld =()=>{
   const navigate = useNavigate()
-  const { user, isAuthenticated } = useGoogleAuth()
+  const { user, isAuthenticated, logout } = useGoogleAuth()
 
   return <main>
     <header>
@@ -12,7 +12,10 @@ const HelloWorld =()=>{
       <button onClick={()=>navigate('/pocketify/redac/')}>Rediger</button>
     </header>
     {isAuthenticated && user ? (
-      <p>Welcome, {user.name}!</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <p style={{ margin: 0 }}>Welcome, {user.name}!</p>
+        <button type="button" onClick={logout}>Logout</button>
+      </div>
     ) : (
       <LoginButton />
     )}
