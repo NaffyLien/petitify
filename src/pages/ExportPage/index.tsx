@@ -1,25 +1,68 @@
 import { useMemo, useState } from 'react'
 import type { ResumeState } from '../../types/resume'
+import { useNavigate } from 'react-router-dom'
 import './ExportPage.css'
 
 type ExportPageProps = {
   resume: ResumeState
-  onBack: () => void
 }
 
-export default function ExportPage({ resume, onBack }: ExportPageProps) {
+type ExcludedKeys = {
+  education: Set<number>
+  experience: Set<number>
+  projects: Set<number>
+  certificates: Set<number>
+  technicalSkills: Set<number>
+  softSkills: Set<number>
+  languages: Set<number>
+}
+
+export default function ExportPage({ resume }: ExportPageProps) {
   const [filter, setFilter] = useState('')
   const [activeKeyword, setActiveKeyword] = useState<string | null>(null)
+  const [excluded, setExcluded] = useState<ExcludedKeys>({
+    education: new Set(),
+    experience: new Set(),
+    projects: new Set(),
+    certificates: new Set(),
+    technicalSkills: new Set(),
+    softSkills: new Set(),
+    languages: new Set(),
+  })
 
   const keywords = ['Mobile development', 'Web Development', 'Desktop App', 'Network']
+  const navigate = useNavigate()
 
   const combinedSkills = useMemo(() => {
     return [...(resume.technicalSkills || []), ...(resume.softSkills || []), ...(resume.languages || [])]
   }, [resume])
 
+  function toggleExclusion(category: keyof ExcludedKeys, id: number) {
+    setExcluded((current) => {
+      const next = { ...current }
+      next[category] = new Set(current[category])
+      if (next[category].has(id)) {
+        next[category].delete(id)
+      } else {
+        next[category].add(id)
+      }
+      return next
+    })
+  }
+
   function downloadJSON() {
-    const data = JSON.stringify(resume, null, 2)
-    const blob = new Blob([data], { type: 'application/json' })
+    const data = {
+      ...resume,
+      education: resume.education.filter((e) => !excluded.education.has(e.id)),
+      experience: resume.experience.filter((ex) => !excluded.experience.has(ex.id)),
+      projects: resume.projects.filter((p) => !excluded.projects.has(p.id)),
+      certificates: resume.certificates.filter((c) => !excluded.certificates.has(c.id)),
+      technicalSkills: resume.technicalSkills.filter((_, idx) => !excluded.technicalSkills.has(idx)),
+      softSkills: resume.softSkills.filter((_, idx) => !excluded.softSkills.has(idx)),
+      languages: resume.languages.filter((_, idx) => !excluded.languages.has(idx)),
+    }
+    const json = JSON.stringify(data, null, 2)
+    const blob = new Blob([json], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
@@ -36,7 +79,7 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
     <div className="export-page">
       <div className="export-page-header">
         <div className="export-page-header-left">
-          <button className="ghost-button" onClick={onBack}>Back</button>
+          <button className="ghost-button" onClick={() => navigate('/pocketify/redac')}>Back</button>
           <h1 className="export-page-title">Exported profile</h1>
         </div>
 
@@ -89,11 +132,21 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
               {resume.education.map((e) => {
                 const txt = [e.degree, e.institution, e.field, e.description].filter(Boolean).join(' ')
                 if (filterText && !txt.toLowerCase().includes(filterText.toLowerCase())) return null
+                const isExcluded = excluded.education.has(e.id)
                 return (
-                  <div key={e.id} className="export-entry">
-                    <strong>{e.degree}</strong> — {e.institution}
-                    <div className="export-meta">{e.startDate} — {e.endDate} • {e.location}</div>
-                    {e.description && <div className="export-desc">{e.description}</div>}
+                  <div key={e.id} className={"export-entry" + (isExcluded ? ' export-entry-excluded' : '')}>
+                    <div>
+                      <strong>{e.degree}</strong> — {e.institution}
+                      <div className="export-meta">{e.startDate} — {e.endDate} • {e.location}</div>
+                      {e.description && <div className="export-desc">{e.description}</div>}
+                    </div>
+                    <button
+                      className={"export-remove-btn" + (isExcluded ? ' export-remove-btn-active' : '')}
+                      onClick={() => toggleExclusion('education', e.id)}
+                      title={isExcluded ? 'Include in export' : 'Exclude from export'}
+                    >
+                      {isExcluded ? 'Include' : 'Remove'}
+                    </button>
                   </div>
                 )
               })}
@@ -109,11 +162,21 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
               {resume.experience.map((ex) => {
                 const txt = [ex.role, ex.company, ex.description].filter(Boolean).join(' ')
                 if (filterText && !txt.toLowerCase().includes(filterText.toLowerCase())) return null
+                const isExcluded = excluded.experience.has(ex.id)
                 return (
-                  <div key={ex.id} className="export-entry">
-                    <strong>{ex.role}</strong> — {ex.company}
-                    <div className="export-meta">{ex.startDate} — {ex.endDate} • {ex.location}</div>
-                    {ex.description && <div className="export-desc">{ex.description}</div>}
+                  <div key={ex.id} className={"export-entry" + (isExcluded ? ' export-entry-excluded' : '')}>
+                    <div>
+                      <strong>{ex.role}</strong> — {ex.company}
+                      <div className="export-meta">{ex.startDate} — {ex.endDate} • {ex.location}</div>
+                      {ex.description && <div className="export-desc">{ex.description}</div>}
+                    </div>
+                    <button
+                      className={"export-remove-btn" + (isExcluded ? ' export-remove-btn-active' : '')}
+                      onClick={() => toggleExclusion('experience', ex.id)}
+                      title={isExcluded ? 'Include in export' : 'Exclude from export'}
+                    >
+                      {isExcluded ? 'Include' : 'Remove'}
+                    </button>
                   </div>
                 )
               })}
@@ -129,10 +192,20 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
               {resume.projects.map((p) => {
                 const txt = [p.name, p.description, p.link].filter(Boolean).join(' ')
                 if (filterText && !txt.toLowerCase().includes(filterText.toLowerCase())) return null
+                const isExcluded = excluded.projects.has(p.id)
                 return (
-                  <div key={p.id} className="export-entry">
-                    <strong>{p.name}</strong> — <small className="export-meta">{p.link}</small>
-                    {p.description && <div className="export-desc">{p.description}</div>}
+                  <div key={p.id} className={"export-entry" + (isExcluded ? ' export-entry-excluded' : '')}>
+                    <div>
+                      <strong>{p.name}</strong> — <small className="export-meta">{p.link}</small>
+                      {p.description && <div className="export-desc">{p.description}</div>}
+                    </div>
+                    <button
+                      className={"export-remove-btn" + (isExcluded ? ' export-remove-btn-active' : '')}
+                      onClick={() => toggleExclusion('projects', p.id)}
+                      title={isExcluded ? 'Include in export' : 'Exclude from export'}
+                    >
+                      {isExcluded ? 'Include' : 'Remove'}
+                    </button>
                   </div>
                 )
               })}
@@ -148,10 +221,20 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
               {resume.certificates.map((c) => {
                 const txt = [c.title, c.issuer, c.description].filter(Boolean).join(' ')
                 if (filterText && !txt.toLowerCase().includes(filterText.toLowerCase())) return null
+                const isExcluded = excluded.certificates.has(c.id)
                 return (
-                  <div key={c.id} className="export-entry">
-                    <strong>{c.title}</strong> — {c.issuer}
-                    <div className="export-meta">{c.date}</div>
+                  <div key={c.id} className={"export-entry" + (isExcluded ? ' export-entry-excluded' : '')}>
+                    <div>
+                      <strong>{c.title}</strong> — {c.issuer}
+                      <div className="export-meta">{c.date}</div>
+                    </div>
+                    <button
+                      className={"export-remove-btn" + (isExcluded ? ' export-remove-btn-active' : '')}
+                      onClick={() => toggleExclusion('certificates', c.id)}
+                      title={isExcluded ? 'Include in export' : 'Exclude from export'}
+                    >
+                      {isExcluded ? 'Include' : 'Remove'}
+                    </button>
                   </div>
                 )
               })}
@@ -165,13 +248,82 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
             <h2 className="export-section-title">Skills & Languages</h2>
             <div className="export-section-content">
               {resume.technicalSkills.length > 0 && (
-                <div><strong>Technical:</strong> {resume.technicalSkills.join(', ')}</div>
+                <div>
+                  <strong>Technical:</strong>
+                  <div>
+                    {resume.technicalSkills.map((skill, idx) => {
+                      const isExcluded = excluded.technicalSkills.has(idx)
+                      if (filterText && !skill.toLowerCase().includes(filterText.toLowerCase())) return null
+                      return (
+                        <span
+                          key={idx}
+                          className={"export-skill-chip" + (isExcluded ? ' export-skill-chip-excluded' : '')}
+                        >
+                          {skill}
+                          <button
+                            className="export-skill-remove"
+                            onClick={() => toggleExclusion('technicalSkills', idx)}
+                            title={isExcluded ? 'Include in export' : 'Exclude from export'}
+                          >
+                            {isExcluded ? '+' : '×'}
+                          </button>
+                        </span>
+                      )
+                    })}
+                  </div>
+                </div>
               )}
               {resume.softSkills.length > 0 && (
-                <div><strong>Soft:</strong> {resume.softSkills.join(', ')}</div>
+                <div>
+                  <strong>Soft:</strong>
+                  <div>
+                    {resume.softSkills.map((skill, idx) => {
+                      const isExcluded = excluded.softSkills.has(idx)
+                      if (filterText && !skill.toLowerCase().includes(filterText.toLowerCase())) return null
+                      return (
+                        <span
+                          key={idx}
+                          className={"export-skill-chip" + (isExcluded ? ' export-skill-chip-excluded' : '')}
+                        >
+                          {skill}
+                          <button
+                            className="export-skill-remove"
+                            onClick={() => toggleExclusion('softSkills', idx)}
+                            title={isExcluded ? 'Include in export' : 'Exclude from export'}
+                          >
+                            {isExcluded ? '+' : '×'}
+                          </button>
+                        </span>
+                      )
+                    })}
+                  </div>
+                </div>
               )}
               {resume.languages.length > 0 && (
-                <div><strong>Languages:</strong> {resume.languages.join(', ')}</div>
+                <div>
+                  <strong>Languages:</strong>
+                  <div>
+                    {resume.languages.map((lang, idx) => {
+                      const isExcluded = excluded.languages.has(idx)
+                      if (filterText && !lang.toLowerCase().includes(filterText.toLowerCase())) return null
+                      return (
+                        <span
+                          key={idx}
+                          className={"export-skill-chip" + (isExcluded ? ' export-skill-chip-excluded' : '')}
+                        >
+                          {lang}
+                          <button
+                            className="export-skill-remove"
+                            onClick={() => toggleExclusion('languages', idx)}
+                            title={isExcluded ? 'Include in export' : 'Exclude from export'}
+                          >
+                            {isExcluded ? '+' : '×'}
+                          </button>
+                        </span>
+                      )
+                    })}
+                  </div>
+                </div>
               )}
             </div>
           </section>

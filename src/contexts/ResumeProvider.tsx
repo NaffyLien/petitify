@@ -7,6 +7,7 @@ import {
   createExperience,
   createProject,
   initialResumeState,
+  type ResumeState,
 } from '../types/resume'
 
 const STORAGE_KEY = 'pocketify-resume'
@@ -227,6 +228,17 @@ export function ResumeProvider({ children }: ResumeProviderProps) {
     })
   }
 
+  const setGoogleUser = (user: ResumeState['googleUser']) => {
+    setResume((current) => {
+      const next = {
+        ...current,
+        googleUser: user,
+      }
+      persist(next)
+      return next
+    })
+  }
+
   return (
     <ResumeContext.Provider
       value={{
@@ -247,6 +259,7 @@ export function ResumeProvider({ children }: ResumeProviderProps) {
         updateSkillList,
         addSkill,
         removeSkill,
+        setGoogleUser,
       }}
     >
       {children}

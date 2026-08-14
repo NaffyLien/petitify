@@ -62,7 +62,34 @@
 }
 
 .export-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
   margin-bottom: 10px;
+}
+
+.export-entry-excluded {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.export-remove-btn {
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #0f172a;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.export-remove-btn-active {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #312e81;
 }
 
 .export-meta {
@@ -80,4 +107,37 @@
 .export-footer {
   margin-top: 26px;
   color: #94a3b8;
+}
+
+.export-skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  margin: 4px 4px 0 0;
+  font-size: 14px;
+}
+
+.export-skill-chip-excluded {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.export-skill-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #475569;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
 }
