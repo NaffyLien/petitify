@@ -31,10 +31,13 @@ type GoogleAuthProviderProps = {
 }
 
 export function GoogleAuthProvider({ children }: GoogleAuthProviderProps) {
-  const { resume, setGoogleUser } = useResume()
+  const { resume, setGoogleUser, updateProfile } = useResume()
 
   const setUser = (user: GoogleUser | null) => {
     setGoogleUser(user)
+    if (user) {
+      updateProfile('email', user.email)
+    }
   }
 
   const logout = () => {
