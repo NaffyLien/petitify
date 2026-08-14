@@ -19,6 +19,7 @@ export type ResumeContextValue = {
   updateSkillList: (key: 'technicalSkills' | 'softSkills' | 'languages', index: number, value: string) => void
   addSkill: (key: 'technicalSkills' | 'softSkills' | 'languages') => void
   removeSkill: (key: 'technicalSkills' | 'softSkills' | 'languages', index: number) => void
+  setGoogleUser: (user: ResumeState['googleUser']) => void
 }
 
 export const ResumeContext = createContext<ResumeContextValue | null>(null)

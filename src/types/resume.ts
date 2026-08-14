@@ -55,6 +55,13 @@ export type ResumeState = {
   technicalSkills: string[]
   softSkills: string[]
   languages: string[]
+  googleUser: {
+    sub: string
+    email: string
+    name: string
+    picture: string
+    email_verified: boolean
+  } | null
 }
 
 export const createEducation = (id: number): EducationItem => ({
@@ -113,4 +120,5 @@ export const initialResumeState: ResumeState = {
   technicalSkills: ['Figma', 'React', 'TypeScript', 'UX Research'],
   softSkills: ['Leadership', 'Communication', 'Teamwork'],
   languages: ['English', 'French', 'Spanish'],
+  googleUser: null,
 }
