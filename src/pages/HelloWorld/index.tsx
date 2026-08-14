@@ -8,7 +8,8 @@ const HelloWorld =()=>{
   return <main>
     <header>
       <h1>Hello world</h1>
-      <button onClick={()=>navigate('/petitify/redac/')}>Rediger</button>
+      <button onClick={()=>navigate('/petitify/redac')}>Rediger</button>
+      <a href="/petitify/redac">Link</a>
     </header>
     {isAuthenticated && user ? (
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
