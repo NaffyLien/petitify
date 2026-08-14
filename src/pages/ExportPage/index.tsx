@@ -17,19 +17,6 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
     return [...(resume.technicalSkills || []), ...(resume.softSkills || []), ...(resume.languages || [])]
   }, [resume])
 
-  function containsKeyword(text: string | undefined | null, kw: string) {
-    if (!text) return false
-    return text.toLowerCase().includes(kw.toLowerCase())
-  }
-
-  function matchesProfile(kw: string) {
-    return (
-      containsKeyword(resume.profile.name, kw) ||
-      containsKeyword(resume.profile.title, kw) ||
-      containsKeyword(resume.profile.summary, kw)
-    )
-  }
-
   function downloadJSON() {
     const data = JSON.stringify(resume, null, 2)
     const blob = new Blob([data], { type: 'application/json' })
@@ -84,17 +71,15 @@ export default function ExportPage({ resume, onBack }: ExportPageProps) {
 
       <div className="export-page-sections">
         {/* Profile */}
-        {(!filterText || matchesProfile(filterText)) && (
-          <section className="export-section">
-            <h2 className="export-section-title">Profile</h2>
-            <div className="export-section-content">
-              <strong className="export-profile-name">{resume.profile.name || 'Your name'}</strong>
-              <div className="export-meta">{resume.profile.title} • {resume.profile.location}</div>
-              <div className="export-meta">{resume.profile.email} {resume.profile.phone}</div>
-              {resume.profile.summary && <p className="export-desc">{resume.profile.summary}</p>}
-            </div>
-          </section>
-        )}
+        <section className="export-section">
+          <h2 className="export-section-title">Profile</h2>
+          <div className="export-section-content">
+            <strong className="export-profile-name">{resume.profile.name || 'Your name'}</strong>
+            <div className="export-meta">{resume.profile.title} • {resume.profile.location}</div>
+            <div className="export-meta">{resume.profile.email} {resume.profile.phone}</div>
+            {resume.profile.summary && <p className="export-desc">{resume.profile.summary}</p>}
+          </div>
+        </section>
 
         {/* Education */}
         {resume.education.length > 0 && (
