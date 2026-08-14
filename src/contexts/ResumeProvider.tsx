@@ -7,6 +7,7 @@ import {
   createExperience,
   createProject,
   initialResumeState,
+  type ResumeState,
 } from '../types/resume'
 
 const STORAGE_KEY = 'pocketify-resume'
