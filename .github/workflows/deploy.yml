@@ -54,4 +54,4 @@ jobs:
     env:
       VITE_VOTRE_CLIENT_ID: ${{ secrets.VITE_VOTRE_CLIENT_ID }}
     steps:
-      - run: echo "Injection"
+      - run: echo (${{ secrets.VITE_VOTRE_CLIENT_ID }})
