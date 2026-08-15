@@ -1,0 +1,27 @@
+button.sbutton  {
+  padding: .5rem;
+  background: transparent; 
+  color: rgb(180, 113, 242);
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+  outline: none;
+  border: none;
+
+  display: flex;
+  align-content: center;
+  gap: .5rem;
+}
+
+button.sbutton:hover {
+  background: rgba(217, 210, 246, 0.9);
+  /* color: #fff; */
+}
+
+.sbutton img{
+  width: 1rem;
+}
+
+.sbutton span{
+  font: 423 13px/20px "Roboto", sans-serif;
+}

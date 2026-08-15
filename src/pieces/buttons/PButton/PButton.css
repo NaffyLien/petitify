@@ -1,0 +1,28 @@
+button.pbutton  {
+  padding: .5rem;
+  border-radius: 10px;
+  background: #fff; 
+  color: grey;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+  outline: none;
+  border: none;
+
+  display: flex;
+  align-content: center;
+  gap: .5rem;
+}
+
+button.pbutton:hover {
+  background: rgba(230, 232, 237, 0.9);
+  /* color: #fff; */
+}
+
+.pbutton img{
+  width: 1rem;
+}
+
+.pbutton span{
+  font: 423 13px/20px "Roboto", sans-serif;
+}
