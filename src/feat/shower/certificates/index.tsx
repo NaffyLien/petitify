@@ -1,21 +1,28 @@
 import { useResume } from '../../../contexts/useResume'
 import type { ShowProps } from '../../../types/feat_props'
-
+import '../shower.css'
+import { plus } from '../../../assets'
+import SButton from '../../../pieces/buttons/SButton'
 const CertificatesShow = (props: ShowProps) => {
   const { resume } = useResume()
   return <>
     {/* Certificates */}
     {resume.certificates.length > 0 && (
-      <section className="export-section">
-        <h2 className="export-section-title">Certificates</h2>
-        <button type="button" onClick={props.handleNewClick}>New language</button>
-        <div className="export-section-content">
+      <section className="show-section">
+        <header>
+          <h2 className="show-section-title">Certificates</h2>
+          <SButton
+            text='New skill'
+            handleClick={props.handleNewClick}
+            image={{src:plus, alt:"NewData"}}
+          />        </header>
+        <div className="show-section-content">
           {resume.certificates.map((c) => {
             return (
-              <div key={c.id} className={"export-entry"}>
+              <div key={c.id} className={"show-entry"}>
                 <div>
                   <strong>{c.title}</strong> — {c.issuer}
-                  <div className="export-meta">{c.date}</div>
+                  <div className="show-meta">{c.date}</div>
                 </div>
               </div>
             )

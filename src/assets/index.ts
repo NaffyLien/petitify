@@ -6,3 +6,5 @@ export { default as folder } from './icons/folder-fill-duo-18.svg'
 export { default as language } from './icons/language-fill-duo-18.svg'
 export { default as side_profile } from './icons/side-profile-fill-duo-18.svg'
 export { default as suitcase } from './icons/suitcase-3-fill-duo-18.svg'
+export { default as plus } from './icons/plus-fill-duo-18.svg'
+
