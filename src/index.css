@@ -39,6 +39,11 @@ textarea {
 h1,
 h2,
 h3,
+span,
+button,
 p {
   margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 400;
+  font: 400  "Roboto", sans-serif;
 }

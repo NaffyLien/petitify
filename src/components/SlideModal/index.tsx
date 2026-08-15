@@ -6,10 +6,9 @@ type SlideModalProps = {
   open: boolean
   title?: string
   onClose: () => void
-  children?: React.ReactNode
 }
 
-export default function SlideModal({ open, title, onClose, children }: SlideModalProps) {
+export default function SlideModal({ open, title, onClose }: SlideModalProps) {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose()

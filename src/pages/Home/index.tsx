@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Home.css'
 import SlideModal from '../../components/SlideModal'
-import ResumePreview from '../../components/ResumePreview'
-import { useResume } from '../../contexts/useResume'
+// import ResumePreview from '../../components/ResumePreview'
+// import { useResume } from '../../contexts/useResume'
 import PButton from '../../pieces/buttons/PButton'
 import { side_profile, book, certificate, suitcase, folder, bolt_fill, face_smile, language } from '../../assets'
 import ProfileShow from '../../feat/shower/profile'
@@ -17,7 +17,7 @@ import LanguagesShow from '../../feat/shower/languages'
 
 const Home = () => {
   const navigate = useNavigate()
-  const { resume } = useResume()
+  // const { resume } = useResume()
 
   const [modalOpen, setModalOpen] = useState(false)
   const [modalSection, setModalSection] = useState<string | null>('profile')
