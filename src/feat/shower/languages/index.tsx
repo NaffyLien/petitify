@@ -1,11 +1,13 @@
 import { useResume } from '../../../contexts/useResume'
+import type { ShowProps } from '../../../types/feat_props'
 
-const LanguagesShow = () => {
+const LanguagesShow = (props: ShowProps ) => {
   const { resume } = useResume()
   return <>
     {resume.languages.length > 0 && (
       <div>
         <strong>Languages:</strong>
+        <button type="button" onClick={props.handleNewClick}>New language</button>
         <div>
           {resume.languages.map((lang, idx) => {
             return (

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import './SlideModal.css'
+import SlideCard from './SlideCard'
 
 type SlideModalProps = {
   open: boolean
@@ -33,7 +34,9 @@ export default function SlideModal({ open, title, onClose, children }: SlideModa
           <button className="ghost-button" onClick={onClose} aria-label="Close panel">Close</button>
         </div>
 
-        <div className="slide-panel-body">{children}</div>
+        <div className="slide-panel-body">
+          {SlideCard(title ?? '')}
+        </div>
       </aside>
     </div>
   )

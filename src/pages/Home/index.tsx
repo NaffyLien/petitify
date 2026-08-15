@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Home.css'
-import { ProfileSection } from '../../feat/profile'
-import { EducationSection } from '../../feat/education'
-import { CertificatesSection } from '../../feat/certificates'
-import { ExperienceSection } from '../../feat/experience'
-import { ProjectsSection } from '../../feat/projects'
-import { SkillsSection } from '../../feat/skills'
-import { SoftSkillsSection } from '../../feat/soft-skills'
-import { LanguagesSection } from '../../feat/languages'
 import SlideModal from '../../components/SlideModal'
 import ResumePreview from '../../components/ResumePreview'
 import { useResume } from '../../contexts/useResume'
@@ -53,7 +45,6 @@ const Home = () => {
         </div>
       </header>
       <main className="page-shell">
-        {/* <aside className="sidebar"> */}
         <aside className="sidebar nav-list" aria-label="Resume sections">
           <PButton handleClick={() => setModalArticle('profile')} text='Profile' image={{ src: side_profile, alt: 'Profile' }} />
           <PButton handleClick={() => setModalArticle('education')} text='Education' image={{ src: book, alt: 'Education' }} />
@@ -65,58 +56,18 @@ const Home = () => {
           <PButton handleClick={() => setModalArticle('languages')} text='Languages' image={{ src: language, alt: 'Languages' }} />
           <button type="button" className="primary-button" onClick={() => navigate('/walk')}>Export profile</button>
         </aside>
-        {/* </aside> */}
 
-        <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}>
-          {modalSection === 'profile' && (
-            <ProfileSection />
-          )}
-
-          {modalSection === 'education' && (
-            <EducationSection />
-          )}
-
-          {modalSection === 'certificates' && (
-            <CertificatesSection />
-          )}
-
-          {modalSection === 'experience' && (
-            <ExperienceSection />
-          )}
-
-          {modalSection === 'projects' && (
-            <ProjectsSection />
-          )}
-
-          {modalSection === 'technical-skills' && (
-            <SkillsSection />
-          )}
-
-          {modalSection === 'soft-skills' && (
-            <SoftSkillsSection />
-          )}
-
-          {modalSection === 'languages' && (
-            <LanguagesSection />
-          )}
-        </SlideModal>
+        <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}/>
 
         <article className="content-panel">
-          {modalArticle === 'profile' && (<ProfileShow />)}
-
-          {modalArticle === 'education' && (<EducationShow />)}
-
-          {modalArticle === 'certificates' && (<CertificatesShow />)}
-
-          {modalArticle === 'experience' && (<ExperienceShow />)}
-
-          {modalArticle === 'projects' && (<ProjectsShow />)}
-
-          {modalArticle === 'technical-skills' && (<SkillsShow />)}
-
-          {modalArticle === 'soft-skills' && (<SoftSkillsShow />)}
-
-          {modalArticle === 'languages' && (<LanguagesShow />)}
+          {modalArticle === 'profile' && (<ProfileShow handleNewClick={()=>openModal('profile')}/>)}
+          {modalArticle === 'education' && (<EducationShow handleNewClick={()=>openModal('education')}/>)}
+          {modalArticle === 'certificates' && (<CertificatesShow handleNewClick={()=>openModal('certificates')}/>)}
+          {modalArticle === 'experience' && (<ExperienceShow handleNewClick={()=>openModal('experience')}/>)}
+          {modalArticle === 'projects' && (<ProjectsShow handleNewClick={()=>openModal('projects')}/>)}
+          {modalArticle === 'technical-skills' && (<SkillsShow handleNewClick={()=>openModal('technical-skills')}/>)}
+          {modalArticle === 'soft-skills' && (<SoftSkillsShow handleNewClick={()=>openModal('soft-skills')}/>)}
+          {modalArticle === 'languages' && (<LanguagesShow handleNewClick={()=>openModal('languages')} />)}
         </article>
       </main>
     </>

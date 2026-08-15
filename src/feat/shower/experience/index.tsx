@@ -1,12 +1,14 @@
 import { useResume } from '../../../contexts/useResume'
+import type { ShowProps } from '../../../types/feat_props'
 
-const ExperienceShow = () => {
+const ExperienceShow = (props:ShowProps) => {
   const { resume } = useResume()
   return <>
           {/* Experience */}
         {resume.experience.length > 0 && (
           <section className="export-section">
             <h2 className="export-section-title">Experience</h2>
+        <button type="button" onClick={props.handleNewClick}>New language</button>
             <div className="export-section-content">
               {resume.experience.map((ex) => {
                 return (
