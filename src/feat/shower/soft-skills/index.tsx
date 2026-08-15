@@ -9,7 +9,7 @@ const SoftSkillsShow = (props: ShowProps) => {
   {resume.softSkills.length > 0 && (
     <section className="show-section">
         <header>
-          <h2 className="show-section-title">Technical Skills</h2>
+          <h2 className="show-section-title">Soft Skills</h2>
           <SButton
             text='New skill'
             handleClick={props.handleNewClick}
