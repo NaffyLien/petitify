@@ -1,19 +1,26 @@
 button.pbutton  {
-  padding: .4rem;
+  padding: .5rem;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255);
-  /* background: transparent; */
+  background: #fff; 
+  color: grey;
   text-align: left;
   cursor: pointer;
   transition: 0.2s ease;
   outline: none;
   border: none;
+
+  display: flex;
+  align-content: center;
+  gap: .5rem;
 }
 
 button.pbutton:hover {
-  background: rgba(119, 134, 198, 0.06);
-  color: #fff;
+  background: rgba(230, 232, 237, 0.9);
+  /* color: #fff; */
+}
+
+.pbutton img{
+  width: 1rem;
 }
 
 .pbutton span{

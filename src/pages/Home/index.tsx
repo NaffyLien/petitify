@@ -13,6 +13,7 @@ import SlideModal from '../../components/SlideModal'
 import ResumePreview from '../../components/ResumePreview'
 import { useResume } from '../../contexts/useResume'
 import PButton from '../../pieces/buttons/PButton'
+import { side_profile, book, certificate, suitcase, folder, bolt_fill, face_smile, language } from '../../assets'
 function AppContent() {
   const navigate = useNavigate()
   const { resume } = useResume()
@@ -46,14 +47,14 @@ function AppContent() {
         </div>
 
         <aside className="nav-list" aria-label="Resume sections">
-          <PButton handleClick={() => openModal('profile')} text='Profile'/>
-          <PButton handleClick={() => openModal('education')} text='Education'/>
-          <PButton handleClick={() => openModal('certificates')} text='Certificates & Training'/>
-          <PButton handleClick={() => openModal('experience')} text='Experience'/>
-          <PButton handleClick={() => openModal('projects')} text='Key projects'/>
-          <PButton handleClick={() => openModal('technical-skills')} text='Technical skills'/>
-          <PButton handleClick={() => openModal('soft-skills')} text='Soft skills'/>
-          <PButton handleClick={() => openModal('languages')} text='Languages'/>
+          <PButton handleClick={() => openModal('profile')} text='Profile' image={{ src: side_profile, alt: 'Profile' }}/>
+          <PButton handleClick={() => openModal('education')} text='Education' image={{ src: book, alt: 'Education' }}/>
+          <PButton handleClick={() => openModal('certificates')} text='Certificates & Training' image={{ src: certificate, alt: 'Certificates & Training' }}/>
+          <PButton handleClick={() => openModal('experience')} text='Experience' image={{ src: suitcase, alt: 'Experience' }}/>
+          <PButton handleClick={() => openModal('projects')} text='Key projects' image={{ src: folder, alt: 'Key projects' }}/>
+          <PButton handleClick={() => openModal('technical-skills')} text='Technical skills' image={{ src: bolt_fill, alt: 'Technical skills' }}/>
+          <PButton handleClick={() => openModal('soft-skills')} text='Soft skills' image={{ src: face_smile, alt: 'Soft skills' }}/>
+          <PButton handleClick={() => openModal('languages')} text='Languages' image={{ src: language, alt: 'Languages' }}/>
         </aside>
       </aside>
 

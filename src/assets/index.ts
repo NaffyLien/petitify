@@ -1,0 +1,8 @@
+export { default as certificate } from './icons/award-certificate-fill-duo-18.svg'
+export { default as bolt_fill } from './icons/bolt-fill-duo-18.svg'
+export { default as book } from './icons/book-open-fill-duo-18.svg'
+export { default as face_smile } from './icons/face-smile-2-fill-duo-18.svg'
+export { default as folder } from './icons/folder-fill-duo-18.svg'
+export { default as language } from './icons/language-fill-duo-18.svg'
+export { default as side_profile } from './icons/side-profile-fill-duo-18.svg'
+export { default as suitcase } from './icons/suitcase-3-fill-duo-18.svg'
