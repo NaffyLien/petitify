@@ -12,17 +12,17 @@ const HelloWorld = () => {
       <Link to="/redac">Link</Link>
     </header>
     <main>
-    {isAuthenticated && user ? (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <p style={{ margin: 0 }}>Welcome, {user.name}!</p>
+      {isAuthenticated && user ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <p style={{ margin: 0 }}>Welcome, {user.name}!</p>
           <p>
-        <button type="button" onClick={logout}>Logout</button>
+            <button type="button" onClick={logout}>Logout</button>
           </p>
-      </div>
-    ) : (
-      <LoginButton />
-    )}
-  </main>
+        </div>
+      ) : (
+        <LoginButton />
+      )}
+    </main>
   </>
 }
 

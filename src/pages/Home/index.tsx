@@ -14,12 +14,22 @@ import ResumePreview from '../../components/ResumePreview'
 import { useResume } from '../../contexts/useResume'
 import PButton from '../../pieces/buttons/PButton'
 import { side_profile, book, certificate, suitcase, folder, bolt_fill, face_smile, language } from '../../assets'
-function AppContent() {
+import ProfileShow from '../../feat/shower/profile'
+import EducationShow from '../../feat/shower/education'
+import CertificatesShow from '../../feat/shower/certificates'
+import ExperienceShow from '../../feat/shower/experience'
+import ProjectsShow from '../../feat/shower/projects'
+import SkillsShow from '../../feat/shower/skills'
+import SoftSkillsShow from '../../feat/shower/soft-skills'
+import LanguagesShow from '../../feat/shower/languages'
+
+const Home = () => {
   const navigate = useNavigate()
   const { resume } = useResume()
 
   const [modalOpen, setModalOpen] = useState(false)
-  const [modalSection, setModalSection] = useState<string | null>(null)
+  const [modalSection, setModalSection] = useState<string | null>('profile')
+  const [modalArticle, setModalArticle] = useState<string | null>('profile')
 
   const openModal = (section: string) => {
     setModalSection(section)
@@ -36,74 +46,81 @@ function AppContent() {
   }, [modalOpen])
 
   return (
-    <main className="page-shell">
-      <aside className="sidebar">
+    <>
+      <header>
         <div className="brand-block">
-          <span className="brand-mark">P</span>
-          <div>
-            <p className="eyebrow">Resume builder</p>
-            <h1>Petitify</h1>
-          </div>
+          <h1>Petitify</h1>
         </div>
-
-        <aside className="nav-list" aria-label="Resume sections">
-          <PButton handleClick={() => openModal('profile')} text='Profile' image={{ src: side_profile, alt: 'Profile' }}/>
-          <PButton handleClick={() => openModal('education')} text='Education' image={{ src: book, alt: 'Education' }}/>
-          <PButton handleClick={() => openModal('certificates')} text='Certificates & Training' image={{ src: certificate, alt: 'Certificates & Training' }}/>
-          <PButton handleClick={() => openModal('experience')} text='Experience' image={{ src: suitcase, alt: 'Experience' }}/>
-          <PButton handleClick={() => openModal('projects')} text='Key projects' image={{ src: folder, alt: 'Key projects' }}/>
-          <PButton handleClick={() => openModal('technical-skills')} text='Technical skills' image={{ src: bolt_fill, alt: 'Technical skills' }}/>
-          <PButton handleClick={() => openModal('soft-skills')} text='Soft skills' image={{ src: face_smile, alt: 'Soft skills' }}/>
-          <PButton handleClick={() => openModal('languages')} text='Languages' image={{ src: language, alt: 'Languages' }}/>
+      </header>
+      <main className="page-shell">
+        {/* <aside className="sidebar"> */}
+        <aside className="sidebar nav-list" aria-label="Resume sections">
+          <PButton handleClick={() => setModalArticle('profile')} text='Profile' image={{ src: side_profile, alt: 'Profile' }} />
+          <PButton handleClick={() => setModalArticle('education')} text='Education' image={{ src: book, alt: 'Education' }} />
+          <PButton handleClick={() => setModalArticle('certificates')} text='Certificates & Training' image={{ src: certificate, alt: 'Certificates & Training' }} />
+          <PButton handleClick={() => setModalArticle('experience')} text='Experience' image={{ src: suitcase, alt: 'Experience' }} />
+          <PButton handleClick={() => setModalArticle('projects')} text='Key projects' image={{ src: folder, alt: 'Key projects' }} />
+          <PButton handleClick={() => setModalArticle('technical-skills')} text='Technical skills' image={{ src: bolt_fill, alt: 'Technical skills' }} />
+          <PButton handleClick={() => setModalArticle('soft-skills')} text='Soft skills' image={{ src: face_smile, alt: 'Soft skills' }} />
+          <PButton handleClick={() => setModalArticle('languages')} text='Languages' image={{ src: language, alt: 'Languages' }} />
+          <button type="button" className="primary-button" onClick={() => navigate('/walk')}>Export profile</button>
         </aside>
-      </aside>
+        {/* </aside> */}
 
-      <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}>
-        {modalSection === 'profile' && (
-          <ProfileSection />
-        )}
+        <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}>
+          {modalSection === 'profile' && (
+            <ProfileSection />
+          )}
 
-        {modalSection === 'education' && (
-          <EducationSection />
-        )}
+          {modalSection === 'education' && (
+            <EducationSection />
+          )}
 
-        {modalSection === 'certificates' && (
-          <CertificatesSection />
-        )}
+          {modalSection === 'certificates' && (
+            <CertificatesSection />
+          )}
 
-        {modalSection === 'experience' && (
-          <ExperienceSection />
-        )}
+          {modalSection === 'experience' && (
+            <ExperienceSection />
+          )}
 
-        {modalSection === 'projects' && (
-          <ProjectsSection />
-        )}
+          {modalSection === 'projects' && (
+            <ProjectsSection />
+          )}
 
-        {modalSection === 'technical-skills' && (
-          <SkillsSection />
-        )}
+          {modalSection === 'technical-skills' && (
+            <SkillsSection />
+          )}
 
-        {modalSection === 'soft-skills' && (
-          <SoftSkillsSection />
-        )}
+          {modalSection === 'soft-skills' && (
+            <SoftSkillsSection />
+          )}
 
-        {modalSection === 'languages' && (
-          <LanguagesSection />
-        )}
-      </SlideModal>
+          {modalSection === 'languages' && (
+            <LanguagesSection />
+          )}
+        </SlideModal>
 
-      <section className="content-panel">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-          <h2 style={{ margin: 0 }}>Resume</h2>
-          <div>
-            <button type="button" className="primary-button" onClick={() => navigate('/walk')}>Export profile</button>
-          </div>
-        </div>
+        <article className="content-panel">
+          {modalArticle === 'profile' && (<ProfileShow />)}
 
-        <ResumePreview resume={resume} />
-      </section>
-    </main>
+          {modalArticle === 'education' && (<EducationShow />)}
+
+          {modalArticle === 'certificates' && (<CertificatesShow />)}
+
+          {modalArticle === 'experience' && (<ExperienceShow />)}
+
+          {modalArticle === 'projects' && (<ProjectsShow />)}
+
+          {modalArticle === 'technical-skills' && (<SkillsShow />)}
+
+          {modalArticle === 'soft-skills' && (<SoftSkillsShow />)}
+
+          {modalArticle === 'languages' && (<LanguagesShow />)}
+        </article>
+      </main>
+    </>
   )
 }
 
-export default AppContent
+export default Home
