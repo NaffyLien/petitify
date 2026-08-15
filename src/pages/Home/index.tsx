@@ -12,7 +12,7 @@ import { LanguagesSection } from '../../feat/languages'
 import SlideModal from '../../components/SlideModal'
 import ResumePreview from '../../components/ResumePreview'
 import { useResume } from '../../contexts/useResume'
-
+import PButton from '../../pieces/buttons/PButton'
 function AppContent() {
   const navigate = useNavigate()
   const { resume } = useResume()
@@ -45,16 +45,16 @@ function AppContent() {
           </div>
         </div>
 
-        <nav className="nav-list" aria-label="Resume sections">
-          <button type="button" onClick={() => openModal('profile')}>Profile</button>
-          <button type="button" onClick={() => openModal('education')}>Education</button>
-          <button type="button" onClick={() => openModal('certificates')}>Certificates & Training</button>
-          <button type="button" onClick={() => openModal('experience')}>Experience</button>
-          <button type="button" onClick={() => openModal('projects')}>Key projects</button>
-          <button type="button" onClick={() => openModal('technical-skills')}>Technical skills</button>
-          <button type="button" onClick={() => openModal('soft-skills')}>Soft skills</button>
-          <button type="button" onClick={() => openModal('languages')}>Languages</button>
-        </nav>
+        <aside className="nav-list" aria-label="Resume sections">
+          <PButton handleClick={() => openModal('profile')} text='Profile'/>
+          <PButton handleClick={() => openModal('education')} text='Education'/>
+          <PButton handleClick={() => openModal('certificates')} text='Certificates & Training'/>
+          <PButton handleClick={() => openModal('experience')} text='Experience'/>
+          <PButton handleClick={() => openModal('projects')} text='Key projects'/>
+          <PButton handleClick={() => openModal('technical-skills')} text='Technical skills'/>
+          <PButton handleClick={() => openModal('soft-skills')} text='Soft skills'/>
+          <PButton handleClick={() => openModal('languages')} text='Languages'/>
+        </aside>
       </aside>
 
       <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}>

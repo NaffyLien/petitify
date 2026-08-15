@@ -160,21 +160,7 @@ textarea {
 }
 
 /* Nav buttons match existing link styling */
-.nav-list button {
-  padding: 12px 14px;
-  border-radius: 12px;
-  color: rgba(255, 255, 255, 0.9);
-  background: transparent;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
 
-.nav-list button:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #fff;
-}
 
 /* export-page helpers */
 .keyword-btn {

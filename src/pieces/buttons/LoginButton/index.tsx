@@ -1,6 +1,6 @@
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
-import { useGoogleAuth } from '../../contexts/GoogleAuthContext'
+import { useGoogleAuth } from '../../../contexts/GoogleAuthContext'
 
 function LoginButton() {
   const { setUser } = useGoogleAuth()
