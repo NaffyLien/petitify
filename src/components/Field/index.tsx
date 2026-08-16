@@ -7,7 +7,7 @@ type FieldProps = {
   fullWidth?: boolean
 }
 
-export function Field({ label, children, fullWidth = false }: FieldProps) {
+const Field = ({ label, children, fullWidth = false }: FieldProps) => {
   return (
     <label className={fullWidth ? 'field full-width' : 'field'}>
       <span>{label}</span>
@@ -15,3 +15,5 @@ export function Field({ label, children, fullWidth = false }: FieldProps) {
     </label>
   )
 }
+
+export default Field

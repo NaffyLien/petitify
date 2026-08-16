@@ -1,10 +1,18 @@
-import { Field } from '../../../components/Field'
-import { SectionHeader } from '../../../components/SectionHeader'
+import Field from '../../../components/Field'
+import SectionHeader from '../../../components/SectionHeader'
 import './ProjectsSection.css'
 import { useResume } from '../../../contexts/useResume'
+import { useState } from 'react'
+import { createProject, type ProjectItem } from '../../../types/resume'
 
-export function ProjectsSection() {
-  const { resume, updateProject, addProject, removeProject } = useResume()
+const ProjectsSection = () => {
+  const { addProject } = useResume()
+  const [entry, setEntry] = useState<ProjectItem>(() => createProject(Date.now()))
+
+  const handleAdd = () => {
+    addProject(entry)
+    setEntry(createProject(Date.now()))
+  }
 
   return (
     <section className="section-card" id="projects">
@@ -12,62 +20,51 @@ export function ProjectsSection() {
         eyebrow="Key projects"
         title="Featured work"
         action={
-          <button type="button" className="ghost-button" onClick={addProject}>
+          <button type="button" className="ghost-button" onClick={handleAdd}>
             + Add project
           </button>
         }
       />
 
-      {resume.projects.map((entry, index) => (
-        <div className="entry-card" key={entry.id}>
-          <div className="entry-actions">
-            <span>Project #{index + 1}</span>
-            {resume.projects.length > 1 && (
-              <button type="button" onClick={() => removeProject(entry.id)}>
-                Remove
-              </button>
-            )}
-          </div>
+      <div className="grid two-columns">
+        <Field label="Project name">
+          <input
+            value={entry.name}
+            onChange={(event) => setEntry((prev) => ({ ...prev, name: event.target.value }))}
+          />
+        </Field>
 
-          <div className="grid two-columns">
-            <Field label="Project name">
-              <input
-                value={entry.name}
-                onChange={(event) => updateProject(entry.id, 'name', event.target.value)}
-              />
-            </Field>
+        <Field label="Your role">
+          <input
+            value={entry.role}
+            onChange={(event) => setEntry((prev) => ({ ...prev, role: event.target.value }))}
+          />
+        </Field>
 
-            <Field label="Your role">
-              <input
-                value={entry.role}
-                onChange={(event) => updateProject(entry.id, 'role', event.target.value)}
-              />
-            </Field>
+        <Field label="Project link">
+          <input
+            value={entry.link}
+            onChange={(event) => setEntry((prev) => ({ ...prev, link: event.target.value }))}
+          />
+        </Field>
 
-            <Field label="Project link">
-              <input
-                value={entry.link}
-                onChange={(event) => updateProject(entry.id, 'link', event.target.value)}
-              />
-            </Field>
+        <Field label="Technologies">
+          <input
+            value={entry.technologies}
+            onChange={(event) => setEntry((prev) => ({ ...prev, technologies: event.target.value }))}
+          />
+        </Field>
 
-            <Field label="Technologies">
-              <input
-                value={entry.technologies}
-                onChange={(event) => updateProject(entry.id, 'technologies', event.target.value)}
-              />
-            </Field>
-
-            <Field label="Description" fullWidth>
-              <textarea
-                rows={4}
-                value={entry.description}
-                onChange={(event) => updateProject(entry.id, 'description', event.target.value)}
-              />
-            </Field>
-          </div>
-        </div>
-      ))}
+        <Field label="Description" fullWidth>
+          <textarea
+            rows={4}
+            value={entry.description}
+            onChange={(event) => setEntry((prev) => ({ ...prev, description: event.target.value }))}
+          />
+        </Field>
+      </div>
     </section>
   )
 }
+
+export default ProjectsSection

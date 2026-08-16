@@ -113,9 +113,9 @@ export const initialResumeState: ResumeState = {
     summary:
       'Product designer with 6+ years of experience building user-centered digital products for SaaS teams.',
   },
-  education: [createEducation(1), createEducation(2)],
+  education: [createEducation(1)],
   certificates: [createCertificate(1)],
-  experience: [createExperience(1), createExperience(2)],
+  experience: [createExperience(1)],
   projects: [createProject(1)],
   technicalSkills: ['Figma', 'React', 'TypeScript', 'UX Research'],
   softSkills: ['Leadership', 'Communication', 'Teamwork'],

@@ -5,7 +5,7 @@ type ResumePreviewProps = {
   resume: ResumeState
 }
 
-export default function ResumePreview({ resume }: ResumePreviewProps) {
+const ResumePreview = ({ resume }: ResumePreviewProps) => {
   return (
     <section className="section-card" aria-label="Resume preview">
       <div className="profile-header">
@@ -116,3 +116,5 @@ export default function ResumePreview({ resume }: ResumePreviewProps) {
     </section>
   )
 }
+
+export default ResumePreview

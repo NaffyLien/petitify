@@ -7,7 +7,7 @@ type SectionHeaderProps = {
   action?: ReactNode
 }
 
-export function SectionHeader({ eyebrow, title, action }: SectionHeaderProps) {
+const SectionHeader = ({ eyebrow, title, action }: SectionHeaderProps) => {
   return (
     <div className="section-header">
       <div>
@@ -18,3 +18,5 @@ export function SectionHeader({ eyebrow, title, action }: SectionHeaderProps) {
     </div>
   )
 }
+
+export default SectionHeader

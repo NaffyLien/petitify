@@ -1,14 +1,11 @@
+import {
+  initialResumeState,
+  type EducationItem,
+  type ResumeState,
+} from '../types/resume'
 import type { ReactNode } from 'react'
 import { useState, useCallback } from 'react'
 import { ResumeContext } from './ResumeContext'
-import {
-  createCertificate,
-  createEducation,
-  createExperience,
-  createProject,
-  initialResumeState,
-  type ResumeState,
-} from '../types/resume'
 
 const STORAGE_KEY = 'petitify-resume'
 
@@ -28,7 +25,7 @@ type ResumeProviderProps = {
   children: ReactNode
 }
 
-export function ResumeProvider({ children }: ResumeProviderProps) {
+export const ResumeProvider = ({ children }: ResumeProviderProps) => {
   const [resume, setResume] = useState(loadResume)
 
   const persist = useCallback((current: typeof initialResumeState) => {
@@ -66,11 +63,11 @@ export function ResumeProvider({ children }: ResumeProviderProps) {
     })
   }
 
-  const addEducation = () => {
+  const addEducation = (education: EducationItem) => {
     setResume((current) => {
       const next = {
         ...current,
-        education: [...current.education, createEducation(Date.now())],
+        education: [education, ...current.education],
       }
       persist(next)
       return next
@@ -101,11 +98,11 @@ export function ResumeProvider({ children }: ResumeProviderProps) {
     })
   }
 
-  const addCertificate = () => {
+  const addCertificate = (certificate: import('../types/resume').CertificateItem) => {
     setResume((current) => {
       const next = {
         ...current,
-        certificates: [...current.certificates, createCertificate(Date.now())],
+        certificates: [certificate, ...current.certificates],
       }
       persist(next)
       return next
@@ -136,11 +133,11 @@ export function ResumeProvider({ children }: ResumeProviderProps) {
     })
   }
 
-  const addExperience = () => {
+  const addExperience = (experience: import('../types/resume').ExperienceItem) => {
     setResume((current) => {
       const next = {
         ...current,
-        experience: [...current.experience, createExperience(Date.now())],
+        experience: [experience, ...current.experience],
       }
       persist(next)
       return next
@@ -171,11 +168,11 @@ export function ResumeProvider({ children }: ResumeProviderProps) {
     })
   }
 
-  const addProject = () => {
+  const addProject = (project: import('../types/resume').ProjectItem) => {
     setResume((current) => {
       const next = {
         ...current,
-        projects: [...current.projects, createProject(Date.now())],
+        projects: [project, ...current.projects],
       }
       persist(next)
       return next
@@ -206,11 +203,11 @@ export function ResumeProvider({ children }: ResumeProviderProps) {
     })
   }
 
-  const addSkill = (key: 'technicalSkills' | 'softSkills' | 'languages') => {
+  const addSkill = (key: 'technicalSkills' | 'softSkills' | 'languages', value: string) => {
     setResume((current) => {
       const next = {
         ...current,
-        [key]: [...current[key], ''],
+        [key]: [...current[key], value],
       }
       persist(next)
       return next

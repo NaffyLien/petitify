@@ -1,7 +1,7 @@
 import { Outlet, Navigate } from 'react-router-dom'
 import { useGoogleAuth } from '../../contexts/GoogleAuthContext'
 
-export default function ProtectedRoute() {
+const ProtectedRoute = () => {
   const { isAuthenticated } = useGoogleAuth()
 
   if (!isAuthenticated) {
@@ -10,3 +10,4 @@ export default function ProtectedRoute() {
 
   return <Outlet />
 }
+export default ProtectedRoute

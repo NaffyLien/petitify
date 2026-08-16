@@ -1,4 +1,4 @@
-import { SectionHeader } from '../SectionHeader'
+import SectionHeader from '../SectionHeader'
 import './PillList.css'
 
 type PillListProps = {
@@ -12,7 +12,7 @@ type PillListProps = {
   onRemove: (index: number) => void
 }
 
-export function PillList({
+const PillList = ({
   id,
   eyebrow,
   title,
@@ -21,7 +21,7 @@ export function PillList({
   onAdd,
   onChange,
   onRemove,
-}: PillListProps) {
+}: PillListProps) => {
   return (
     <section className="section-card" id={id}>
       <SectionHeader
@@ -50,3 +50,5 @@ export function PillList({
     </section>
   )
 }
+
+export default PillList

@@ -1,11 +1,11 @@
-import { ProfileSection } from '../../feat/_dressing/profile'
-import { EducationSection } from '../../feat/_dressing/education'
-import { CertificatesSection } from '../../feat/_dressing/certificates'
-import { ExperienceSection } from '../../feat/_dressing/experience'
-import { ProjectsSection } from '../../feat/_dressing/projects'
-import { SkillsSection } from '../../feat/_dressing/skills'
-import { SoftSkillsSection } from '../../feat/_dressing/soft-skills'
-import { LanguagesSection } from '../../feat/_dressing/languages'
+import ProfileSection from '../../feat/_dressing/profile'
+import EducationSection from '../../feat/_dressing/education'
+import CertificatesSection from '../../feat/_dressing/certificates'
+import ExperienceSection from '../../feat/_dressing/experience'
+import ProjectsSection from '../../feat/_dressing/projects'
+import SkillsSection from '../../feat/_dressing/skills'
+import SoftSkillsSection from '../../feat/_dressing/soft-skills'
+import LanguagesSection from '../../feat/_dressing/languages'
 
 
 const SlideCard = (modalSection: string) => {

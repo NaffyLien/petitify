@@ -17,7 +17,7 @@ const SkillsShow = (props: ShowProps) => {
           />
         } />
         <div className="show-section-content">
-          {resume.technicalSkills.map((skill, idx) => {
+          {resume.technicalSkills.map((skill: string, idx: number) => {
             return (
               <span
                 key={idx}

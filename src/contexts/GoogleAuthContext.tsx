@@ -18,7 +18,7 @@ export type GoogleAuthContextValue = {
 
 export const GoogleAuthContext = createContext<GoogleAuthContextValue | null>(null)
 
-export function useGoogleAuth() {
+export const useGoogleAuth = () => {
   const context = useContext(GoogleAuthContext)
   if (!context) {
     throw new Error('useGoogleAuth must be used within a GoogleAuthProvider')
@@ -30,7 +30,7 @@ type GoogleAuthProviderProps = {
   children: ReactNode
 }
 
-export function GoogleAuthProvider({ children }: GoogleAuthProviderProps) {
+export const GoogleAuthProvider = ({ children }: GoogleAuthProviderProps) => {
   const { resume, setGoogleUser } = useResume()
 
   const setUser = (user: GoogleUser | null) => {

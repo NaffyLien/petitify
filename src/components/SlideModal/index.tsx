@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import './SlideModal.css'
 import SlideCard from './SlideCard'
+import SButton from '../../pieces/buttons/SButton'
+import { xmark } from '../../assets'
 
 type SlideModalProps = {
   open: boolean
@@ -29,8 +31,13 @@ export default function SlideModal({ open, title, onClose }: SlideModalProps) {
 
       <aside className="slide-panel" role="dialog" aria-modal="true" aria-label={title}>
         <div className="slide-panel-header">
-          <h3>{title}</h3>
-          <button className="ghost-button" onClick={onClose} aria-label="Close panel">Close</button>
+          <h3>Add {title} informations</h3>
+          <span className="ghost-button">
+            <SButton
+              handleClick={onClose}
+              image={{ src: xmark, alt: "Close button" }}
+            />
+          </span>
         </div>
 
         <div className="slide-panel-body">

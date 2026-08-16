@@ -17,7 +17,7 @@ const SoftSkillsShow = (props: ShowProps) => {
           />
         } />
         <div className="show-section-content">
-          {resume.softSkills.map((skill, idx) => {
+          {resume.softSkills.map((skill: string, idx: number) => {
             return (
               <span
                 key={idx}

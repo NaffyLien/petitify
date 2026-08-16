@@ -15,6 +15,7 @@ button.sbutton  {
 
 button.sbutton:hover {
   background: rgba(217, 210, 246, 0.9);
+  border-radius: 5px;
   /* color: #fff; */
 }
 

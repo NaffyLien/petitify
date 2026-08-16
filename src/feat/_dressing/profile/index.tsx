@@ -1,9 +1,9 @@
-import { Field } from '../../../components/Field'
-import { SectionHeader } from '../../../components/SectionHeader'
+import Field from '../../../components/Field'
+import SectionHeader from '../../../components/SectionHeader'
 import './ProfileSection.css'
 import { useResume } from '../../../contexts/useResume'
 
-export function ProfileSection() {
+const ProfileSection = () => {
   const { resume, updateProfile } = useResume()
 
   return (
@@ -61,3 +61,5 @@ export function ProfileSection() {
     </section>
   )
 }
+
+export default ProfileSection
