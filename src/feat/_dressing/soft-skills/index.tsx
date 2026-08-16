@@ -6,19 +6,19 @@ import { useState } from 'react'
 
 type SoftSkillsSectionProps = {
   editItem?: unknown
-  editIndex?: number
   onClose?: () => void
 }
 
-const SoftSkillsSection = ({ editItem, editIndex, onClose }: SoftSkillsSectionProps) => {
+const SoftSkillsSection = ({ editItem, onClose }: SoftSkillsSectionProps) => {
   const { addSkill, updateSkillList } = useResume()
-  const isEditing = (editItem as string | undefined) !== undefined && editIndex !== undefined
-  const [value, setValue] = useState(() => (editItem as string | undefined) ?? '')
+  const editData = editItem as { value: string; index: number } | null | undefined
+  const isEditing = !!editData
+  const [value, setValue] = useState(() => editData?.value ?? '')
 
   const handleSave = () => {
     if (!value.trim()) return
-    if (isEditing && editIndex !== undefined) {
-      updateSkillList('softSkills', editIndex, value.trim())
+    if (isEditing && editData) {
+      updateSkillList('softSkills', editData.index, value.trim())
     } else {
       addSkill('softSkills', value.trim())
     }
