@@ -2,7 +2,7 @@ import { useResume } from '../../../contexts/useResume'
 import type { ShowProps } from '../../../types/feat_props'
 import '../shower.css'
 import SButton from '../../../pieces/buttons/SButton'
-import { plus } from '../../../assets'
+import {  pen_sparkle } from '../../../assets'
 import HeaderShow from '../_header'
 const ProfileShow = (props: ShowProps) => {
   const { resume } = useResume()
@@ -10,9 +10,9 @@ const ProfileShow = (props: ShowProps) => {
     <section className="show-section">
       <HeaderShow titre={"Profile"} children={
         <SButton
-          text='New skill'
+          text='Edit profil'
           handleClick={props.handleNewClick}
-          image={{ src: plus, alt: "NewData" }}
+          image={{ src: pen_sparkle, alt: "NewData" }}
         />
       }/>
       <article className="show-section-content">

@@ -12,7 +12,7 @@ const EducationShow = (props: ShowProps) => {
       <section className="show-section">
         <HeaderShow titre={"Education"} children={
           <SButton
-            text='New skill'
+            text='New info'
             handleClick={props.handleNewClick}
             image={{src:plus, alt:"NewData"}}
           />        

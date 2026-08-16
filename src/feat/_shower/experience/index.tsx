@@ -12,7 +12,7 @@ const ExperienceShow = (props: ShowProps) => {
       <section className="show-section">
         <HeaderShow titre={"Experience"} children={
           <SButton
-            text='New skill'
+            text='New experience'
             handleClick={props.handleNewClick}
             image={{ src: plus, alt: "NewData" }}
           />

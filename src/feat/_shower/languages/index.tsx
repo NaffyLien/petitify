@@ -12,7 +12,7 @@ const LanguagesShow = (props: ShowProps) => {
         <HeaderShow titre={"Languages"}
           children={
             <SButton
-              text='New skill'
+              text='New language'
               handleClick={props.handleNewClick}
               image={{ src: plus, alt: "NewData" }}
             />

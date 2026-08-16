@@ -12,7 +12,7 @@ const CertificatesShow = (props: ShowProps) => {
       <section className="show-section">
         <HeaderShow titre={"Certificates"} children={
           <SButton
-            text='New skill'
+            text='New certificate'
             handleClick={props.handleNewClick}
             image={{ src: plus, alt: "NewData" }}
           />

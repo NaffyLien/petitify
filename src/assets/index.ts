@@ -9,3 +9,4 @@ export { default as suitcase } from './icons/suitcase-3-fill-duo-18.svg'
 export { default as plus } from './icons/plus-fill-duo-18.svg'
 
 export { default as xmark } from './icons/xmark-fill-duo-18.svg'
+export { default as pen_sparkle } from './icons/pen-sparkle-fill-duo-18.svg'
