@@ -6,18 +6,17 @@ import SlideModal from '../../components/SlideModal'
 // import { useResume } from '../../contexts/useResume'
 import PButton from '../../pieces/buttons/PButton'
 import { side_profile, book, certificate, suitcase, folder, bolt_fill, face_smile, language } from '../../assets'
-import ProfileShow from '../../feat/shower/profile'
-import EducationShow from '../../feat/shower/education'
-import CertificatesShow from '../../feat/shower/certificates'
-import ExperienceShow from '../../feat/shower/experience'
-import ProjectsShow from '../../feat/shower/projects'
-import SkillsShow from '../../feat/shower/skills'
-import SoftSkillsShow from '../../feat/shower/soft-skills'
-import LanguagesShow from '../../feat/shower/languages'
+import ProfileShow from '../../feat/_shower/profile'
+import EducationShow from '../../feat/_shower/education'
+import CertificatesShow from '../../feat/_shower/certificates'
+import ExperienceShow from '../../feat/_shower/experience'
+import ProjectsShow from '../../feat/_shower/projects'
+import SkillsShow from '../../feat/_shower/skills'
+import SoftSkillsShow from '../../feat/_shower/soft-skills'
+import LanguagesShow from '../../feat/_shower/languages'
 
 const Home = () => {
   const navigate = useNavigate()
-  // const { resume } = useResume()
 
   const [modalOpen, setModalOpen] = useState(false)
   const [modalSection, setModalSection] = useState<string | null>('profile')

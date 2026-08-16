@@ -2,17 +2,9 @@
 header .brand-block {
   display: flex;
   align-items: center;
-  /* gap: 14px; */
-  /* margin-bottom: 32px; */
+  flex-direction: row;
+  padding: .2rem 1.2rem;
 }
-
-header .brand-block h1 {
-  margin: .5rem 0 0;
-  /* margin: 6px 0 0; */
-  color: inherit;
-
-}
-
 
 .page-shell {
   display: grid;
@@ -38,20 +30,7 @@ header .brand-block h1 {
 .nav-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.nav-list a {
-  padding: 12px 14px;
-  border-radius: 12px;
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
-  transition: 0.2s ease;
-}
-
-.nav-list a:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #fff;
+  gap: .2rem;
 }
 
 .content-panel {

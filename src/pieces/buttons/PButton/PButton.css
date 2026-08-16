@@ -1,5 +1,5 @@
 button.pbutton  {
-  padding: .5rem;
+  padding: .8rem 1.2rem;
   border-radius: 10px;
   background: #fff; 
   color: grey;
@@ -11,7 +11,7 @@ button.pbutton  {
 
   display: flex;
   align-content: center;
-  gap: .5rem;
+  gap: .8rem;
 }
 
 button.pbutton:hover {
