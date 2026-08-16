@@ -8,38 +8,51 @@ import SoftSkillsSection from '../../feat/_dressing/soft-skills'
 import LanguagesSection from '../../feat/_dressing/languages'
 
 
-const SlideCard = (modalSection: string) => {
+const SlideCard = (modalSection: string, editItem?: unknown, onClose?: () => void) => {
+  const props = { editItem, onClose }
+  const getKey = () => {
+    if (!editItem) return modalSection
+    if (typeof editItem === 'object' && editItem !== null && 'id' in editItem) {
+      return `${modalSection}-${(editItem as { id: number }).id}`
+    }
+    if (typeof editItem === 'object' && editItem !== null && 'value' in editItem) {
+      const item = editItem as unknown as { value: string; index: number }
+      return `${modalSection}-${item.value}-${item.index}`
+    }
+    return modalSection
+  }
+  const key = getKey()
   return <>
     {modalSection === 'profile' && (
-      <ProfileSection />
+      <ProfileSection key={modalSection} />
     )}
 
     {modalSection === 'education' && (
-      <EducationSection />
+      <EducationSection key={key} {...props} />
     )}
 
     {modalSection === 'certificates' && (
-      <CertificatesSection />
+      <CertificatesSection key={key} {...props} />
     )}
 
     {modalSection === 'experience' && (
-      <ExperienceSection />
+      <ExperienceSection key={key} {...props} />
     )}
 
     {modalSection === 'projects' && (
-      <ProjectsSection />
+      <ProjectsSection key={key} {...props} />
     )}
 
     {modalSection === 'technical-skills' && (
-      <SkillsSection />
+      <SkillsSection key={key} {...props} />
     )}
 
     {modalSection === 'soft-skills' && (
-      <SoftSkillsSection />
+      <SoftSkillsSection key={key} {...props} />
     )}
 
     {modalSection === 'languages' && (
-      <LanguagesSection />
+      <LanguagesSection key={key} {...props} />
     )}</>
 }
 

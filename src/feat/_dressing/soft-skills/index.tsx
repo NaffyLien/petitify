@@ -4,14 +4,26 @@ import './SoftSkillsSection.css'
 import { useResume } from '../../../contexts/useResume'
 import { useState } from 'react'
 
-const SoftSkillsSection = () => {
-  const { addSkill } = useResume()
-  const [value, setValue] = useState('')
+type SoftSkillsSectionProps = {
+  editItem?: unknown
+  editIndex?: number
+  onClose?: () => void
+}
 
-  const handleAdd = () => {
+const SoftSkillsSection = ({ editItem, editIndex, onClose }: SoftSkillsSectionProps) => {
+  const { addSkill, updateSkillList } = useResume()
+  const isEditing = (editItem as string | undefined) !== undefined && editIndex !== undefined
+  const [value, setValue] = useState(() => (editItem as string | undefined) ?? '')
+
+  const handleSave = () => {
     if (!value.trim()) return
-    addSkill('softSkills', value.trim())
+    if (isEditing && editIndex !== undefined) {
+      updateSkillList('softSkills', editIndex, value.trim())
+    } else {
+      addSkill('softSkills', value.trim())
+    }
     setValue('')
+    onClose?.()
   }
 
   return (
@@ -20,8 +32,8 @@ const SoftSkillsSection = () => {
         eyebrow="Soft skills"
         title="Work style"
         action={
-          <button type="button" className="ghost-button" onClick={handleAdd}>
-            + Add soft skill
+          <button type="button" className="ghost-button" onClick={handleSave}>
+            {isEditing ? 'Save' : '+ Add soft skill'}
           </button>
         }
       />
@@ -34,7 +46,7 @@ const SoftSkillsSection = () => {
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 event.preventDefault()
-                handleAdd()
+                handleSave()
               }
             }}
           />

@@ -4,14 +4,26 @@ import './SkillsSection.css'
 import { useResume } from '../../../contexts/useResume'
 import { useState } from 'react'
 
-const SkillsSection = () => {
-  const { addSkill } = useResume()
-  const [value, setValue] = useState('')
+type SkillsSectionProps = {
+  editItem?: unknown
+  editIndex?: number
+  onClose?: () => void
+}
 
-  const handleAdd = () => {
+const SkillsSection = ({ editItem, editIndex, onClose }: SkillsSectionProps) => {
+  const { addSkill, updateSkillList } = useResume()
+  const isEditing = (editItem as string | undefined) !== undefined && editIndex !== undefined
+  const [value, setValue] = useState(() => (editItem as string | undefined) ?? '')
+
+  const handleSave = () => {
     if (!value.trim()) return
-    addSkill('technicalSkills', value.trim())
+    if (isEditing && editIndex !== undefined) {
+      updateSkillList('technicalSkills', editIndex, value.trim())
+    } else {
+      addSkill('technicalSkills', value.trim())
+    }
     setValue('')
+    onClose?.()
   }
 
   return (
@@ -20,8 +32,8 @@ const SkillsSection = () => {
         eyebrow="Technical skills"
         title="Tools and stacks"
         action={
-          <button type="button" className="ghost-button" onClick={handleAdd}>
-            + Add skill
+          <button type="button" className="ghost-button" onClick={handleSave}>
+            {isEditing ? 'Save' : '+ Add skill'}
           </button>
         }
       />
@@ -34,7 +46,7 @@ const SkillsSection = () => {
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 event.preventDefault()
-                handleAdd()
+                handleSave()
               }
             }}
           />

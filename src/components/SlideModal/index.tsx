@@ -8,9 +8,10 @@ type SlideModalProps = {
   open: boolean
   title?: string
   onClose: () => void
+  editItem?: unknown
 }
 
-export default function SlideModal({ open, title, onClose }: SlideModalProps) {
+export default function SlideModal({ open, title, onClose, editItem }: SlideModalProps) {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose()
@@ -31,7 +32,7 @@ export default function SlideModal({ open, title, onClose }: SlideModalProps) {
 
       <aside className="slide-panel" role="dialog" aria-modal="true" aria-label={title}>
         <div className="slide-panel-header">
-          <h3>Add {title} informations</h3>
+          <h3>{editItem ? 'Edit' : 'Add'} {title} informations</h3>
           <span className="ghost-button">
             <SButton
               handleClick={onClose}
@@ -41,7 +42,7 @@ export default function SlideModal({ open, title, onClose }: SlideModalProps) {
         </div>
 
         <div className="slide-panel-body">
-          {SlideCard(title ?? '')}
+          {SlideCard(title ?? '', editItem, onClose)}
         </div>
       </aside>
     </div>

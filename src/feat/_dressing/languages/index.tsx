@@ -4,14 +4,26 @@ import './LanguagesSection.css'
 import { useResume } from '../../../contexts/useResume'
 import { useState } from 'react'
 
-const LanguagesSection = () => {
-  const { addSkill } = useResume()
-  const [value, setValue] = useState('')
+type LanguagesSectionProps = {
+  editItem?: unknown
+  editIndex?: number
+  onClose?: () => void
+}
 
-  const handleAdd = () => {
+const LanguagesSection = ({ editItem, editIndex, onClose }: LanguagesSectionProps) => {
+  const { addSkill, updateSkillList } = useResume()
+  const isEditing = (editItem as string | undefined) !== undefined && editIndex !== undefined
+  const [value, setValue] = useState(() => (editItem as string | undefined) ?? '')
+
+  const handleSave = () => {
     if (!value.trim()) return
-    addSkill('languages', value.trim())
+    if (isEditing && editIndex !== undefined) {
+      updateSkillList('languages', editIndex, value.trim())
+    } else {
+      addSkill('languages', value.trim())
+    }
     setValue('')
+    onClose?.()
   }
 
   return (
@@ -20,8 +32,8 @@ const LanguagesSection = () => {
         eyebrow="Languages"
         title="Language proficiency"
         action={
-          <button type="button" className="ghost-button" onClick={handleAdd}>
-            + Add language
+          <button type="button" className="ghost-button" onClick={handleSave}>
+            {isEditing ? 'Save' : '+ Add language'}
           </button>
         }
       />
@@ -34,7 +46,7 @@ const LanguagesSection = () => {
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 event.preventDefault()
-                handleAdd()
+                handleSave()
               }
             }}
           />

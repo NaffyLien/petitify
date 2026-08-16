@@ -5,13 +5,25 @@ import { useResume } from '../../../contexts/useResume'
 import { useState } from 'react'
 import { createCertificate, type CertificateItem } from '../../../types/resume'
 
-const CertificatesSection = () => {
-  const { addCertificate } = useResume()
-  const [entry, setEntry] = useState<CertificateItem>(() => createCertificate(Date.now()))
+type CertificatesSectionProps = {
+  editItem?: unknown
+  onClose?: () => void
+}
 
-  const handleAdd = () => {
-    addCertificate(entry)
-    setEntry(createCertificate(Date.now()))
+const CertificatesSection = ({ editItem, onClose }: CertificatesSectionProps) => {
+  const { addCertificate, replaceCertificate } = useResume()
+  const isEditing = !!editItem
+  const [entry, setEntry] = useState<CertificateItem>(() =>
+    (editItem as CertificateItem | null) ? { ...(editItem as CertificateItem) } : createCertificate(Date.now()),
+  )
+
+  const handleSave = () => {
+    if (isEditing && editItem) {
+      replaceCertificate((editItem as CertificateItem).id, entry)
+    } else {
+      addCertificate(entry)
+    }
+    onClose?.()
   }
 
   return (
@@ -20,8 +32,8 @@ const CertificatesSection = () => {
         eyebrow="Certificates & Training"
         title="Credentials"
         action={
-          <button type="button" className="ghost-button" onClick={handleAdd}>
-            + Add certificate
+          <button type="button" className="ghost-button" onClick={handleSave}>
+            {isEditing ? 'Save' : '+ Add certificate'}
           </button>
         }
       />

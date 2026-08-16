@@ -12,12 +12,19 @@ import ProjectsShow from '../../feat/_shower/projects'
 import SkillsShow from '../../feat/_shower/skills'
 import SoftSkillsShow from '../../feat/_shower/soft-skills'
 import LanguagesShow from '../../feat/_shower/languages'
+import type { EducationItem, CertificateItem, ExperienceItem, ProjectItem } from '../../types/resume'
+
+type EditingState = {
+  section: string
+  item: EducationItem | CertificateItem | ExperienceItem | ProjectItem | { value: string; index: number } | null
+}
 
 const Home = () => {
   const navigate = useNavigate()
   const [modalOpen, setModalOpen] = useState(false)
   const [modalSection, setModalSection] = useState<string | null>('profile')
   const [modalArticle, setModalArticle] = useState<string | null>('profile')
+  const [editing, setEditing] = useState<EditingState>({ section: '', item: null })
 
   const openModal = (section: string) => {
     setModalSection(section)
@@ -27,6 +34,13 @@ const Home = () => {
   const closeModal = () => {
     setModalOpen(false)
     setModalSection(null)
+    setEditing({ section: '', item: null })
+  }
+
+  const handleEdit = (section: string, item: EditingState['item']) => {
+    setEditing({ section, item })
+    setModalSection(section)
+    setModalOpen(true)
   }
 
   useEffect(() => {
@@ -53,17 +67,57 @@ const Home = () => {
           <button type="button" className="primary-button" onClick={() => navigate('/walk')}>Export profile</button>
         </aside>
 
-        <SlideModal open={modalOpen} onClose={closeModal} title={modalSection ?? ''}/>
+        <SlideModal
+          open={modalOpen}
+          onClose={closeModal}
+          title={modalSection ?? ''}
+          editItem={editing.section === modalSection ? editing.item : undefined}
+        />
 
         <article className="content-panel">
           {modalArticle === 'profile' && (<ProfileShow handleNewClick={()=>openModal('profile')}/>)}
-          {modalArticle === 'education' && (<EducationShow handleNewClick={()=>openModal('education')}/>)}
-          {modalArticle === 'certificates' && (<CertificatesShow handleNewClick={()=>openModal('certificates')}/>)}
-          {modalArticle === 'experience' && (<ExperienceShow handleNewClick={()=>openModal('experience')}/>)}
-          {modalArticle === 'projects' && (<ProjectsShow handleNewClick={()=>openModal('projects')}/>)}
-          {modalArticle === 'technical-skills' && (<SkillsShow handleNewClick={()=>openModal('technical-skills')}/>)}
-          {modalArticle === 'soft-skills' && (<SoftSkillsShow handleNewClick={()=>openModal('soft-skills')}/>)}
-          {modalArticle === 'languages' && (<LanguagesShow handleNewClick={()=>openModal('languages')} />)}
+          {modalArticle === 'education' && (
+            <EducationShow
+              handleNewClick={() => openModal('education')}
+              onEdit={(item) => handleEdit('education', item as EducationItem)}
+            />
+          )}
+          {modalArticle === 'certificates' && (
+            <CertificatesShow
+              handleNewClick={() => openModal('certificates')}
+              onEdit={(item) => handleEdit('certificates', item as CertificateItem)}
+            />
+          )}
+          {modalArticle === 'experience' && (
+            <ExperienceShow
+              handleNewClick={() => openModal('experience')}
+              onEdit={(item) => handleEdit('experience', item as ExperienceItem)}
+            />
+          )}
+          {modalArticle === 'projects' && (
+            <ProjectsShow
+              handleNewClick={() => openModal('projects')}
+              onEdit={(item) => handleEdit('projects', item as ProjectItem)}
+            />
+          )}
+          {modalArticle === 'technical-skills' && (
+            <SkillsShow
+              handleNewClick={() => openModal('technical-skills')}
+              onEdit={(item) => handleEdit('technical-skills', item as { value: string; index: number })}
+            />
+          )}
+          {modalArticle === 'soft-skills' && (
+            <SoftSkillsShow
+              handleNewClick={() => openModal('soft-skills')}
+              onEdit={(item) => handleEdit('soft-skills', item as { value: string; index: number })}
+            />
+          )}
+          {modalArticle === 'languages' && (
+            <LanguagesShow
+              handleNewClick={() => openModal('languages')}
+              onEdit={(item) => handleEdit('languages', item as { value: string; index: number })}
+            />
+          )}
         </article>
       </main>
     </>

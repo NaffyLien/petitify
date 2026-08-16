@@ -5,13 +5,25 @@ import { useResume } from '../../../contexts/useResume'
 import { useState } from 'react'
 import { createProject, type ProjectItem } from '../../../types/resume'
 
-const ProjectsSection = () => {
-  const { addProject } = useResume()
-  const [entry, setEntry] = useState<ProjectItem>(() => createProject(Date.now()))
+type ProjectsSectionProps = {
+  editItem?: unknown
+  onClose?: () => void
+}
 
-  const handleAdd = () => {
-    addProject(entry)
-    setEntry(createProject(Date.now()))
+const ProjectsSection = ({ editItem, onClose }: ProjectsSectionProps) => {
+  const { addProject, replaceProject } = useResume()
+  const isEditing = !!editItem
+  const [entry, setEntry] = useState<ProjectItem>(() =>
+    (editItem as ProjectItem | null) ? { ...(editItem as ProjectItem) } : createProject(Date.now()),
+  )
+
+  const handleSave = () => {
+    if (isEditing && editItem) {
+      replaceProject((editItem as ProjectItem).id, entry)
+    } else {
+      addProject(entry)
+    }
+    onClose?.()
   }
 
   return (
@@ -20,8 +32,8 @@ const ProjectsSection = () => {
         eyebrow="Key projects"
         title="Featured work"
         action={
-          <button type="button" className="ghost-button" onClick={handleAdd}>
-            + Add project
+          <button type="button" className="ghost-button" onClick={handleSave}>
+            {isEditing ? 'Save' : '+ Add project'}
           </button>
         }
       />

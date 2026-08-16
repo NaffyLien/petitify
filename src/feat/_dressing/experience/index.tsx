@@ -5,13 +5,25 @@ import { useResume } from '../../../contexts/useResume'
 import { useState } from 'react'
 import { createExperience, type ExperienceItem } from '../../../types/resume'
 
-const ExperienceSection = () => {
-  const { addExperience } = useResume()
-  const [entry, setEntry] = useState<ExperienceItem>(() => createExperience(Date.now()))
+type ExperienceSectionProps = {
+  editItem?: unknown
+  onClose?: () => void
+}
 
-  const handleAdd = () => {
-    addExperience(entry)
-    setEntry(createExperience(Date.now()))
+const ExperienceSection = ({ editItem, onClose }: ExperienceSectionProps) => {
+  const { addExperience, replaceExperience } = useResume()
+  const isEditing = !!editItem
+  const [entry, setEntry] = useState<ExperienceItem>(() =>
+    (editItem as ExperienceItem | null) ? { ...(editItem as ExperienceItem) } : createExperience(Date.now()),
+  )
+
+  const handleSave = () => {
+    if (isEditing && editItem) {
+      replaceExperience((editItem as ExperienceItem).id, entry)
+    } else {
+      addExperience(entry)
+    }
+    onClose?.()
   }
 
   return (
@@ -20,8 +32,8 @@ const ExperienceSection = () => {
         eyebrow="Experience"
         title="Work history"
         action={
-          <button type="button" className="ghost-button" onClick={handleAdd}>
-            + Add experience
+          <button type="button" className="ghost-button" onClick={handleSave}>
+            {isEditing ? 'Save' : '+ Add experience'}
           </button>
         }
       />

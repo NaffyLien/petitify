@@ -74,6 +74,19 @@ export const ResumeProvider = ({ children }: ResumeProviderProps) => {
     })
   }
 
+  const replaceEducation = (id: number, education: EducationItem) => {
+    setResume((current) => {
+      const next = {
+        ...current,
+        education: current.education.map((entry) =>
+          entry.id === id ? education : entry,
+        ),
+      }
+      persist(next)
+      return next
+    })
+  }
+
   const removeEducation = (id: number) => {
     setResume((current) => {
       const next = {
@@ -103,6 +116,19 @@ export const ResumeProvider = ({ children }: ResumeProviderProps) => {
       const next = {
         ...current,
         certificates: [certificate, ...current.certificates],
+      }
+      persist(next)
+      return next
+    })
+  }
+
+  const replaceCertificate = (id: number, certificate: import('../types/resume').CertificateItem) => {
+    setResume((current) => {
+      const next = {
+        ...current,
+        certificates: current.certificates.map((entry) =>
+          entry.id === id ? certificate : entry,
+        ),
       }
       persist(next)
       return next
@@ -144,6 +170,19 @@ export const ResumeProvider = ({ children }: ResumeProviderProps) => {
     })
   }
 
+  const replaceExperience = (id: number, experience: import('../types/resume').ExperienceItem) => {
+    setResume((current) => {
+      const next = {
+        ...current,
+        experience: current.experience.map((entry) =>
+          entry.id === id ? experience : entry,
+        ),
+      }
+      persist(next)
+      return next
+    })
+  }
+
   const removeExperience = (id: number) => {
     setResume((current) => {
       const next = {
@@ -173,6 +212,19 @@ export const ResumeProvider = ({ children }: ResumeProviderProps) => {
       const next = {
         ...current,
         projects: [project, ...current.projects],
+      }
+      persist(next)
+      return next
+    })
+  }
+
+  const replaceProject = (id: number, project: import('../types/resume').ProjectItem) => {
+    setResume((current) => {
+      const next = {
+        ...current,
+        projects: current.projects.map((entry) =>
+          entry.id === id ? project : entry,
+        ),
       }
       persist(next)
       return next
@@ -243,15 +295,19 @@ export const ResumeProvider = ({ children }: ResumeProviderProps) => {
         updateProfile,
         updateEducation,
         addEducation,
+        replaceEducation,
         removeEducation,
         updateCertificate,
         addCertificate,
+        replaceCertificate,
         removeCertificate,
         updateExperience,
         addExperience,
+        replaceExperience,
         removeExperience,
         updateProject,
         addProject,
+        replaceProject,
         removeProject,
         updateSkillList,
         addSkill,
